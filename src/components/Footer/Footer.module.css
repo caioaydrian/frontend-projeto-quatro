@@ -1,0 +1,79 @@
+.siteFooter {
+  display: flex;
+  min-height: 94px;
+  align-items: center;
+  justify-content: space-between;
+  width: min(100% - 112px, 1376px);
+  margin: 0 auto;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.brandMark {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  color: var(--accent);
+  font-family: var(--serif);
+  font-size: 20px;
+  font-style: italic;
+}
+
+.brandName {
+  display: grid;
+  gap: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.brandName span {
+  color: var(--muted);
+  font-size: 7px;
+  font-weight: 500;
+  letter-spacing: 0.27em;
+}
+
+.tagline {
+  color: #b7afa4;
+  font-family: var(--serif);
+  font-size: 14px;
+  font-style: italic;
+}
+
+.copyright {
+  color: #777167;
+  font-size: 8px;
+  letter-spacing: 0.14em;
+}
+
+@media (max-width: 900px) {
+  .siteFooter {
+    width: min(100% - 64px, 760px);
+  }
+}
+
+@media (max-width: 640px) {
+  .siteFooter {
+    width: calc(100% - 40px);
+    min-height: 120px;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 22px 0;
+  }
+
+  .tagline {
+    display: none;
+  }
+
+  .copyright {
+    font-size: 7px;
+  }
+}

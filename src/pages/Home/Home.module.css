@@ -1,0 +1,700 @@
+.hero {
+  position: relative;
+  display: grid;
+  width: min(100% - 112px, 1376px);
+  min-height: 635px;
+  grid-template-columns: 0.91fr 1.09fr;
+  align-items: center;
+  gap: 54px;
+  margin: 0 auto;
+  padding: 65px 0 90px;
+}
+
+.heroCopy {
+  position: relative;
+  z-index: 1;
+  padding-bottom: 10px;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  color: var(--accent);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.19em;
+}
+
+.eyebrow > span {
+  display: block;
+  width: 25px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.title {
+  font-family: var(--serif);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  margin-top: 27px;
+  font-size: clamp(64px, 7.3vw, 102px);
+  line-height: 0.99;
+}
+
+.title em,
+.sectionTitle em {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.heroDescription {
+  max-width: 390px;
+  margin-top: 23px;
+  color: #aaa399;
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.heroActions {
+  display: flex;
+  align-items: center;
+  gap: 27px;
+  margin-top: 31px;
+}
+
+.button {
+  display: inline-flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 0 19px;
+  border: 1px solid rgb(200 157 106 / 65%);
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 600;
+  transition:
+    background 180ms ease,
+    color 180ms ease;
+  cursor: pointer;
+}
+
+.button span {
+  color: var(--accent);
+  font-size: 16px;
+}
+
+.buttonPrimary {
+  composes: button;
+  background: var(--accent);
+  color: #211d17;
+}
+
+.buttonPrimary:hover {
+  background: #ddba91;
+}
+
+.buttonPrimary span {
+  color: #211d17;
+}
+
+.buttonLight {
+  composes: button;
+  margin-top: 24px;
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.buttonLight:hover {
+  background: var(--accent);
+  color: var(--background);
+}
+
+.textLink {
+  color: #d8d1c8;
+  font-size: 11px;
+  transition: color 180ms ease;
+}
+
+.textLink:hover {
+  color: var(--accent);
+}
+
+.textLink span {
+  margin-left: 7px;
+  color: var(--accent);
+  font-size: 15px;
+}
+
+.heroNote {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 52px;
+}
+
+.avatarStack {
+  display: flex;
+  padding-left: 3px;
+}
+
+.avatarStack span {
+  display: grid;
+  width: 29px;
+  height: 29px;
+  place-items: center;
+  margin-left: -4px;
+  border: 2px solid var(--background);
+  border-radius: 50%;
+  background: #665347;
+  color: #f2e8dd;
+  font-family: var(--serif);
+  font-size: 11px;
+}
+
+.avatarStack span:nth-child(2) {
+  background: #817258;
+}
+
+.avatarStack span:nth-child(3) {
+  background: #78594c;
+}
+
+.heroNote p {
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 1.7;
+}
+
+.heroNote strong {
+  color: #e4ddd3;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.heroVisual {
+  position: relative;
+  height: 490px;
+  overflow: visible;
+  background: #29231e;
+}
+
+.heroImage,
+.imageShade {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+}
+
+.heroImage {
+  object-fit: cover;
+  object-position: center 52%;
+}
+
+.imageShade {
+  background: linear-gradient(180deg, rgb(15 13 11 / 8%) 45%, rgb(15 13 11 / 58%) 100%);
+}
+
+.openBadge {
+  position: absolute;
+  top: 21px;
+  right: 21px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 13px;
+  background: rgb(24 23 20 / 83%);
+  color: #e5dfd6;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+}
+
+.openBadge > span:nth-child(2) {
+  color: var(--muted);
+}
+
+.openDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #9ab58b;
+  box-shadow: 0 0 9px rgb(154 181 139 / 70%);
+}
+
+.imageCaption {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  color: #e5dfd6;
+  font-size: 8px;
+  letter-spacing: 0.16em;
+}
+
+.captionLine {
+  width: 38px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.coffeeStamp {
+  position: absolute;
+  right: -30px;
+  bottom: 77px;
+  display: grid;
+  width: 105px;
+  height: 105px;
+  align-content: center;
+  justify-items: center;
+  gap: 6px;
+  border: 1px solid rgb(200 157 106 / 65%);
+  border-radius: 50%;
+  background: var(--background);
+  color: #d9c9b4;
+  font-size: 6px;
+  letter-spacing: 0.14em;
+}
+
+.stampIcon {
+  color: var(--accent);
+  font-size: 23px;
+}
+
+.scrollCue {
+  position: absolute;
+  bottom: 29px;
+  left: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #8f887d;
+  font-size: 8px;
+  letter-spacing: 0.17em;
+}
+
+.scrollCue span {
+  width: 29px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.welcomeSection {
+  display: grid;
+  min-height: 283px;
+  grid-template-columns: 1fr 1fr auto;
+  align-items: center;
+  gap: 60px;
+  padding: 57px max(56px, calc((100% - 1180px) / 2));
+  border-top: 1px solid rgb(234 228 219 / 8%);
+  border-bottom: 1px solid rgb(234 228 219 / 8%);
+  background: #1d1b17;
+}
+
+.welcomeHeading h2,
+.sectionHeading h2 {
+  font-family: var(--serif);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  margin-top: 17px;
+  font-size: clamp(34px, 4vw, 48px);
+  line-height: 1.13;
+}
+
+.welcomeCopy {
+  max-width: 380px;
+  color: #aaa399;
+  font-size: 12px;
+  line-height: 2;
+}
+
+.roundLink {
+  display: grid;
+  width: 91px;
+  height: 91px;
+  align-content: center;
+  justify-items: center;
+  gap: 5px;
+  border: 1px solid rgb(200 157 106 / 55%);
+  border-radius: 50%;
+  color: var(--accent);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  line-height: 1.5;
+  text-align: center;
+  transition: background 180ms ease;
+}
+
+.roundLink:hover {
+  background: rgb(200 157 106 / 10%);
+}
+
+.roundLink b {
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.menuSection {
+  width: min(100% - 112px, 1180px);
+  margin: 0 auto;
+  padding: 104px 0 112px;
+}
+
+.sectionHeading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.sectionHeading h2 {
+  font-size: clamp(34px, 4.4vw, 50px);
+}
+
+.menuLink {
+  margin-bottom: 8px;
+}
+
+.drinkGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 23px;
+}
+
+.drinkCard {
+  min-width: 0;
+}
+
+.drinkImageWrap {
+  position: relative;
+  height: 255px;
+  overflow: hidden;
+  background: #29231e;
+}
+
+.drinkImageWrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 350ms ease;
+}
+
+.drinkCard:hover .drinkImageWrap img {
+  transform: scale(1.04);
+}
+
+.drinkNumber {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: grid;
+  width: 33px;
+  height: 33px;
+  place-items: center;
+  background: var(--background);
+  color: var(--accent);
+  font-family: var(--serif);
+  font-size: 12px;
+}
+
+.drinkDetails {
+  padding: 19px 2px 0;
+}
+
+.drinkMeta {
+  display: flex;
+  justify-content: space-between;
+  color: var(--accent);
+  font-size: 8px;
+  letter-spacing: 0.13em;
+}
+
+.drinkMeta span:last-child {
+  color: #ded6ca;
+  font-size: 11px;
+  letter-spacing: 0;
+}
+
+.drinkDetails h3 {
+  margin-top: 9px;
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.drinkDetails p {
+  max-width: 300px;
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.8;
+}
+
+.visitSection {
+  position: relative;
+  display: grid;
+  min-height: 400px;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  padding: 75px max(56px, calc((100% - 1180px) / 2));
+  background:
+    linear-gradient(90deg, rgb(24 23 20 / 98%) 0%, rgb(24 23 20 / 94%) 45%, rgb(24 23 20 / 64%) 100%),
+    url("https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=1800&q=85") center 50% /
+      cover;
+}
+
+.visitContent {
+  position: relative;
+  z-index: 1;
+}
+
+.visitContent h2 {
+  font-family: var(--serif);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  margin-top: 17px;
+  font-size: clamp(57px, 7vw, 80px);
+  line-height: 0.99;
+}
+
+.visitContent > p:not(.eyebrow) {
+  max-width: 310px;
+  margin-top: 18px;
+  color: #aaa399;
+  font-size: 11px;
+  line-height: 1.9;
+}
+
+.visitDetails {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 28px;
+  padding-left: 24%;
+}
+
+.detailLabel {
+  color: var(--accent);
+  font-size: 8px;
+  letter-spacing: 0.17em;
+}
+
+.visitDetails p {
+  margin-top: 8px;
+  color: #ded7cd;
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.visitDecoration {
+  position: absolute;
+  right: -5px;
+  bottom: -100px;
+  color: rgb(200 157 106 / 8%);
+  font-family: var(--serif);
+  font-size: 340px;
+  font-style: italic;
+  line-height: 1;
+  pointer-events: none;
+}
+
+@media (min-width: 1500px) {
+  .hero {
+    min-height: 700px;
+  }
+
+  .heroVisual {
+    height: 540px;
+  }
+}
+
+@media (max-width: 900px) {
+  .hero,
+  .menuSection {
+    width: min(100% - 64px, 760px);
+  }
+
+  .hero {
+    min-height: 580px;
+    grid-template-columns: 0.95fr 1.05fr;
+    gap: 30px;
+  }
+
+  .heroVisual {
+    height: 420px;
+  }
+
+  .title {
+    font-size: clamp(57px, 8vw, 78px);
+  }
+
+  .heroActions {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .welcomeSection {
+    grid-template-columns: 1fr 1fr auto;
+    gap: 28px;
+    padding-right: 32px;
+    padding-left: 32px;
+  }
+
+  .drinkImageWrap {
+    height: 205px;
+  }
+
+  .visitSection {
+    padding-right: 32px;
+    padding-left: 32px;
+  }
+
+  .visitDetails {
+    padding-left: 15%;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    width: calc(100% - 40px);
+    grid-template-columns: 1fr;
+    gap: 37px;
+    padding: 58px 0 79px;
+  }
+
+  .title {
+    margin-top: 21px;
+    font-size: clamp(67px, 17vw, 90px);
+  }
+
+  .heroDescription {
+    max-width: 340px;
+    margin-top: 18px;
+    font-size: 12px;
+  }
+
+  .heroActions {
+    align-items: center;
+    flex-direction: row;
+    gap: 20px;
+    margin-top: 25px;
+  }
+
+  .heroActions .button {
+    gap: 10px;
+    padding: 0 13px;
+    font-size: 10px;
+  }
+
+  .heroActions .textLink {
+    font-size: 10px;
+  }
+
+  .heroNote {
+    margin-top: 27px;
+  }
+
+  .heroVisual {
+    height: min(95vw, 410px);
+    margin-right: 12px;
+  }
+
+  .coffeeStamp {
+    right: -14px;
+    bottom: 50px;
+    width: 86px;
+    height: 86px;
+    font-size: 5px;
+  }
+
+  .stampIcon {
+    font-size: 19px;
+  }
+
+  .scrollCue {
+    bottom: 27px;
+  }
+
+  .welcomeSection {
+    min-height: auto;
+    grid-template-columns: 1fr auto;
+    gap: 23px 12px;
+    padding: 48px 20px;
+  }
+
+  .welcomeHeading h2,
+  .sectionHeading h2 {
+    font-size: 36px;
+  }
+
+  .welcomeCopy {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    max-width: 420px;
+  }
+
+  .roundLink {
+    width: 77px;
+    height: 77px;
+  }
+
+  .menuSection {
+    width: calc(100% - 40px);
+    padding: 73px 0 79px;
+  }
+
+  .sectionHeading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 17px;
+    margin-bottom: 27px;
+  }
+
+  .drinkGrid {
+    grid-template-columns: 1fr;
+    gap: 31px;
+  }
+
+  .drinkImageWrap {
+    height: min(72vw, 300px);
+  }
+
+  .drinkDetails {
+    padding-top: 14px;
+  }
+
+  .drinkDetails h3 {
+    font-size: 21px;
+  }
+
+  .visitSection {
+    min-height: auto;
+    grid-template-columns: 1fr;
+    gap: 41px;
+    padding: 56px 20px 62px;
+    background-position: 58% center;
+  }
+
+  .visitContent h2 {
+    font-size: 68px;
+  }
+
+  .visitDetails {
+    gap: 22px;
+    padding-left: 0;
+  }
+
+  .visitDecoration {
+    right: 2px;
+    bottom: -80px;
+    font-size: 220px;
+  }
+}
