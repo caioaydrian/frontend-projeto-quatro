@@ -9,7 +9,7 @@
 - Redirecionar para o login após o cadastro
 - Lidar com as mensagens de erro da API
 
-[] Criar a página inicial (landing page)
-[] Criar a página de registro de usuários
-[] Criar a página de login de usuários
+[x] Criar a página inicial (landing page)
+[x] Criar a página de registro de usuários
+[x] Criar a página de login de usuários (estrutura básica e destino pós-cadastro)
 [] Implementar autenticação de usuários

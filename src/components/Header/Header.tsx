@@ -9,7 +9,12 @@ export function Header() {
 
   return (
     <header className={styles.siteHeader}>
-      <NavLink className={styles.brand} to="#home" aria-label="Dark Coffee Shop home" onClick={closeMenu}>
+      <NavLink
+        className={styles.brand}
+        to="#home"
+        aria-label="Dark Coffee Shop home"
+        onClick={closeMenu}
+      >
         <span className={styles.brandMark} aria-hidden="true">
           D
         </span>
@@ -29,7 +34,10 @@ export function Header() {
         <span />
       </button>
 
-      <nav className={`${styles.siteNav} ${menuOpen ? styles.isOpen : ""}`} aria-label="Main navigation">
+      <nav
+        className={`${styles.siteNav} ${menuOpen ? styles.isOpen : ""}`}
+        aria-label="Main navigation"
+      >
         <NavLink to="#home" onClick={closeMenu}>
           Home
         </NavLink>
@@ -42,8 +50,8 @@ export function Header() {
         <NavLink to="#visit" onClick={closeMenu}>
           Find Us
         </NavLink>
-        <NavLink className={styles.navCta} to="#menu" onClick={closeMenu}>
-          Explore the menu <span aria-hidden="true">↗</span>
+        <NavLink className={styles.navCta} to="/register" onClick={closeMenu}>
+          Register <span aria-hidden="true">↗</span>
         </NavLink>
       </nav>
     </header>
