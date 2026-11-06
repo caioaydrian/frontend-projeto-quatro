@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { cleanCPF, formatCPF, validateEmail } from "../../utils/validation";
 import styles from "./Register.module.css";
 
-const API_URL = "http://localhost:3000/users";
+const API_URL = "http://localhost:3000/auth/register";
 
 interface FieldErrors {
   name?: string;
