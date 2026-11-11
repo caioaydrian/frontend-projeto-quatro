@@ -50,6 +50,9 @@ export function Header() {
         <NavLink to="#visit" onClick={closeMenu}>
           Find Us
         </NavLink>
+        <NavLink to="/login" onClick={closeMenu}>
+          Sign In
+        </NavLink>
         <NavLink className={styles.navCta} to="/register" onClick={closeMenu}>
           Register <span aria-hidden="true">↗</span>
         </NavLink>
