@@ -1,9 +1,8 @@
 import { useState, type FormEvent, type ChangeEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { cleanCPF, formatCPF, validateEmail } from "../../utils/validation";
+import { API_BASE_URL } from "../../utils/api";
 import styles from "./Register.module.css";
-
-const API_URL = "http://localhost:3000/auth/register";
 
 interface FieldErrors {
   name?: string;
@@ -89,7 +88,7 @@ export function Register() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(API_URL, {
+      const response = await fetch(`${API_BASE_URL}/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
