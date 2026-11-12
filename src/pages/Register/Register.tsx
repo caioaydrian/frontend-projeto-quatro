@@ -1,7 +1,7 @@
 import { useState, type FormEvent, type ChangeEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { cleanCPF, formatCPF, validateEmail } from "../../utils/validation";
-import { API_BASE_URL } from "../../utils/api";
+import { apiFetch } from "../../utils/api";
 import styles from "./Register.module.css";
 
 interface FieldErrors {
@@ -88,30 +88,15 @@ export function Register() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/register`, {
+      await apiFetch("/auth/register", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+        body: {
           name: formData.name.trim(),
           email: formData.email.trim().toLowerCase(),
           cpf: cleanCPF(formData.cpf),
           password: formData.password,
-        }),
+        },
       });
-
-      const data = await response.json().catch(() => null);
-
-      if (!response.ok) {
-        const errorMsg =
-          data?.error ||
-          data?.message ||
-          "An error occurred while creating your account. Please try again.";
-        setApiError(errorMsg);
-        setIsSubmitting(false);
-        return;
-      }
 
       setSuccessMessage("Account created successfully! Redirecting to sign in...");
 
@@ -126,7 +111,11 @@ export function Register() {
       }, 1500);
     } catch (err) {
       console.error("Registration request error:", err);
-      setApiError("Unable to connect to the server. Please verify the backend is running.");
+      const msg =
+        err instanceof Error
+          ? err.message
+          : "Unable to connect to the server. Please verify the backend is running.";
+      setApiError(msg);
       setIsSubmitting(false);
     }
   };

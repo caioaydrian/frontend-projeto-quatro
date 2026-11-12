@@ -2,7 +2,7 @@ import { useState, type FormEvent } from "react";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { validateEmail } from "../../utils/validation";
 import { useAuth } from "../../contexts/useAuth";
-import { API_BASE_URL } from "../../utils/api";
+import { apiFetch } from "../../utils/api";
 import styles from "./Login.module.css";
 
 interface LocationState {
@@ -62,26 +62,13 @@ export function Login() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/login`, {
+      const data = await apiFetch<{ token: string }>("/auth/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+        body: {
           email: email.trim().toLowerCase(),
           password,
-        }),
+        },
       });
-
-      const data = await response.json().catch(() => null);
-
-      if (!response.ok) {
-        const errorMsg =
-          data?.error || data?.message || "Unable to sign in right now. Please try again.";
-        setApiError(errorMsg);
-        setIsSubmitting(false);
-        return;
-      }
 
       if (!data?.token) {
         setApiError("Unexpected response from the server. Please try again.");
