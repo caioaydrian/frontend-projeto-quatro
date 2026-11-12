@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { validateEmail } from "../../utils/validation";
-import { getToken, saveToken } from "../../utils/auth";
+import { useAuth } from "../../contexts/useAuth";
 import { API_BASE_URL } from "../../utils/api";
 import styles from "./Login.module.css";
 
@@ -17,6 +17,7 @@ interface FieldErrors {
 }
 
 export function Login() {
+  const { isAuthenticated, login } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const state = (location.state as LocationState) || {};
@@ -28,7 +29,7 @@ export function Login() {
   const [apiError, setApiError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  if (getToken()) {
+  if (isAuthenticated) {
     return <Navigate to="/admin" replace />;
   }
 
@@ -88,11 +89,12 @@ export function Login() {
         return;
       }
 
-      saveToken(data.token);
+      login(data.token);
       navigate("/admin", { replace: true });
     } catch (err) {
       console.error("Login request error:", err);
-      setApiError("Unable to connect to the server. Please verify the backend is running.");
+      const msg = err instanceof Error ? err.message : "Unable to sign in right now.";
+      setApiError(msg);
       setIsSubmitting(false);
     }
   };

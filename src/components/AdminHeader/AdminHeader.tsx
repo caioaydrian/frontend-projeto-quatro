@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { clearToken } from "../../utils/auth";
 import styles from "./AdminHeader.module.css";
+import { useAuth } from "../../contexts/useAuth";
 
 const navItems = [
   { to: "/admin", label: "Dashboard", end: true },
@@ -12,12 +12,13 @@ const navItems = [
 
 export function AdminHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const closeMenu = () => setMenuOpen(false);
 
   const handleSignOut = () => {
-    clearToken();
+    logout();
     navigate("/login", { replace: true });
   };
 
@@ -61,6 +62,13 @@ export function AdminHeader() {
               {item.label}
             </NavLink>
           ))}
+
+          {user && (
+            <div className={styles.userInfo} title={user.email}>
+              <span>Signed in as</span>
+              <span className={styles.userName}>{user.name}</span>
+            </div>
+          )}
 
           <Link className={styles.siteLink} to="/" onClick={closeMenu}>
             View site ↗

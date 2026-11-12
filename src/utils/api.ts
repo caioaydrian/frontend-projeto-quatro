@@ -58,7 +58,7 @@ export async function apiFetch<T>(endpoint: string, options: ApiFetchOptions = {
   if (!response.ok) {
     const errorData = await response.json().catch(() => null);
     const errorMessage =
-      errorData?.error || errorData?.message || `Requisição falhou com status ${response.status}`;
+      errorData?.error || errorData?.message || `Request failed with status ${response.status}`;
     throw new Error(errorMessage);
   }
 
