@@ -14,3 +14,4 @@
 [x] Criar a página de login de usuários (estrutura básica e destino pós-cadastro)
 [] Implementar autenticação de usuários
 [x] Criar rota de register para o sign-in ao invés de usar o cadastro de usuários diretamente
+[] Validar token no frontend

@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Home, Register, Login } from "./pages";
-import { MainLayout } from "./layouts";
+import { Home, Register, Login, Dashboard } from "./pages";
+import { MainLayout, ProtectedLayout } from "./layouts";
 
 const router = createBrowserRouter([
   {
@@ -10,6 +10,10 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "register", element: <Register /> },
       { path: "login", element: <Login /> },
+      {
+        element: <ProtectedLayout />,
+        children: [{ path: "dashboard", element: <Dashboard /> }],
+      },
     ],
   },
 ]);

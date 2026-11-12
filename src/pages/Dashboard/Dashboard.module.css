@@ -1,0 +1,114 @@
+.dashboardContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 92px - 100px);
+  padding: 48px 24px;
+}
+
+.dashboardCard {
+  width: 100%;
+  max-width: 520px;
+  background: var(--surface);
+  border: 1px solid rgb(234 228 219 / 10%);
+  padding: 40px;
+  box-shadow: 0 16px 40px rgb(0 0 0 / 40%);
+}
+
+.header {
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.eyebrow span {
+  width: 18px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.title {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.title em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-top: 1px solid rgb(234 228 219 / 8%);
+  padding-top: 24px;
+}
+
+.primaryButton {
+  display: inline-flex;
+  width: 100%;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  color: var(--background);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: background 180ms ease;
+}
+
+.primaryButton:hover {
+  background: #d9ad79;
+}
+
+.secondaryButton {
+  width: 100%;
+  min-height: 46px;
+  background: transparent;
+  border: 1px solid rgb(234 228 219 / 20%);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    border-color 180ms ease,
+    color 180ms ease;
+}
+
+.secondaryButton:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+@media (max-width: 640px) {
+  .dashboardCard {
+    padding: 28px 20px;
+  }
+}

@@ -1,5 +1,8 @@
 import { useState, type FormEvent } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { validateEmail } from "../../utils/validation";
+import { saveToken } from "../../utils/auth";
+import { API_BASE_URL } from "../../utils/api";
 import styles from "./Login.module.css";
 
 interface LocationState {
@@ -8,17 +11,86 @@ interface LocationState {
   message?: string;
 }
 
+interface FieldErrors {
+  email?: string;
+  password?: string;
+}
+
 export function Login() {
   const location = useLocation();
+  const navigate = useNavigate();
   const state = (location.state as LocationState) || {};
 
   const [email, setEmail] = useState(state.email || "");
   const [password, setPassword] = useState("");
   const [infoMessage, setInfoMessage] = useState<string | null>(state.message || null);
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+  const [apiError, setApiError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: FormEvent) => {
+  const validateForm = (): boolean => {
+    const errors: FieldErrors = {};
+
+    if (!email.trim()) {
+      errors.email = "Email is required.";
+    } else if (!validateEmail(email)) {
+      errors.email = "Please enter a valid email address.";
+    }
+
+    if (!password) {
+      errors.password = "Password is required.";
+    }
+
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    alert("Sign-in functionality will be implemented in the next sprint!");
+    setApiError(null);
+    setInfoMessage(null);
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email.trim().toLowerCase(),
+          password,
+        }),
+      });
+
+      const data = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        const errorMsg =
+          data?.error || data?.message || "Unable to sign in right now. Please try again.";
+        setApiError(errorMsg);
+        setIsSubmitting(false);
+        return;
+      }
+
+      if (!data?.token) {
+        setApiError("Unexpected response from the server. Please try again.");
+        setIsSubmitting(false);
+        return;
+      }
+
+      saveToken(data.token);
+      navigate("/dashboard", { replace: true });
+    } catch (err) {
+      console.error("Login request error:", err);
+      setApiError("Unable to connect to the server. Please verify the backend is running.");
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -43,7 +115,14 @@ export function Login() {
           </div>
         )}
 
-        <form className={styles.form} onSubmit={handleSubmit}>
+        {apiError && (
+          <div className={styles.alertError} role="alert">
+            <span aria-hidden="true">⚠️</span>
+            <span>{apiError}</span>
+          </div>
+        )}
+
+        <form className={styles.form} onSubmit={handleSubmit} noValidate>
           <div className={styles.fieldGroup}>
             <label className={styles.label} htmlFor="login-email">
               Email
@@ -51,15 +130,20 @@ export function Login() {
             <input
               id="login-email"
               type="email"
+              autoComplete="email"
               required
-              className={styles.input}
+              className={`${styles.input} ${fieldErrors.email ? styles.inputError : ""}`}
               placeholder="your@email.com"
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
+                if (fieldErrors.email) setFieldErrors((prev) => ({ ...prev, email: undefined }));
+                if (apiError) setApiError(null);
                 if (infoMessage) setInfoMessage(null);
               }}
+              disabled={isSubmitting}
             />
+            {fieldErrors.email && <span className={styles.fieldError}>{fieldErrors.email}</span>}
           </div>
 
           <div className={styles.fieldGroup}>
@@ -69,16 +153,26 @@ export function Login() {
             <input
               id="login-password"
               type="password"
+              autoComplete="current-password"
               required
-              className={styles.input}
+              className={`${styles.input} ${fieldErrors.password ? styles.inputError : ""}`}
               placeholder="Your password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                if (fieldErrors.password)
+                  setFieldErrors((prev) => ({ ...prev, password: undefined }));
+                if (apiError) setApiError(null);
+              }}
+              disabled={isSubmitting}
             />
+            {fieldErrors.password && (
+              <span className={styles.fieldError}>{fieldErrors.password}</span>
+            )}
           </div>
 
-          <button type="submit" className={styles.submitButton}>
-            Sign In ↗
+          <button type="submit" className={styles.submitButton} disabled={isSubmitting}>
+            {isSubmitting ? "Signing in..." : "Sign In ↗"}
           </button>
         </form>
 
