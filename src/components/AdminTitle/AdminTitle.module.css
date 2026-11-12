@@ -1,0 +1,49 @@
+.header {
+  max-width: 640px;
+  margin-bottom: 32px;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+.eyebrow span {
+  width: 18px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.title {
+  font-size: 34px;
+  line-height: 1.1;
+}
+
+.title em {
+  color: var(--accent);
+  font-style: italic;
+}
+
+.description {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+@media (max-width: 640px) {
+  .header {
+    margin-bottom: 24px;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+}
