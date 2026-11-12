@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { validateEmail } from "../../utils/validation";
-import { saveToken } from "../../utils/auth";
+import { getToken, saveToken } from "../../utils/auth";
 import { API_BASE_URL } from "../../utils/api";
 import styles from "./Login.module.css";
 
@@ -27,6 +27,10 @@ export function Login() {
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [apiError, setApiError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  if (getToken()) {
+    return <Navigate to="/admin" replace />;
+  }
 
   const validateForm = (): boolean => {
     const errors: FieldErrors = {};
@@ -85,7 +89,7 @@ export function Login() {
       }
 
       saveToken(data.token);
-      navigate("/dashboard", { replace: true });
+      navigate("/admin", { replace: true });
     } catch (err) {
       console.error("Login request error:", err);
       setApiError("Unable to connect to the server. Please verify the backend is running.");
