@@ -1,6 +1,6 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Home, Register, Login, Dashboard } from "./pages";
-import { MainLayout, ProtectedLayout } from "./layouts";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
+import { Home, Register, Login, Dashboard, Users, Drinks, Categories } from "./pages";
+import { MainLayout, AdminLayout, ProtectedLayout } from "./layouts";
 
 const router = createBrowserRouter([
   {
@@ -10,12 +10,24 @@ const router = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "register", element: <Register /> },
       { path: "login", element: <Login /> },
+    ],
+  },
+  {
+    path: "/admin",
+    element: <ProtectedLayout />,
+    children: [
       {
-        element: <ProtectedLayout />,
-        children: [{ path: "dashboard", element: <Dashboard /> }],
+        element: <AdminLayout />,
+        children: [
+          { index: true, element: <Dashboard /> },
+          { path: "users", element: <Users /> },
+          { path: "drinks", element: <Drinks /> },
+          { path: "categories", element: <Categories /> },
+        ],
       },
     ],
   },
+  { path: "/dashboard", element: <Navigate to="/admin" replace /> },
 ]);
 
 function App() {

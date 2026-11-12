@@ -1,40 +1,50 @@
-import { Link, useNavigate } from "react-router-dom";
-import { clearToken } from "../../utils/auth";
+import { Link } from "react-router-dom";
+import { AdminTitle } from "../../components/AdminTitle";
 import styles from "./Dashboard.module.css";
 
+const sections = [
+  {
+    to: "/admin/users",
+    title: "Users",
+    description: "Create, review, and remove the accounts that can access the shop.",
+  },
+  {
+    to: "/admin/drinks",
+    title: "Drinks",
+    description: "Keep the drink menu, prices, and availability up to date.",
+  },
+  {
+    to: "/admin/categories",
+    title: "Categories",
+    description: "Organize the menu into categories so it stays easy to browse.",
+  },
+];
+
 export function Dashboard() {
-  const navigate = useNavigate();
-
-  const handleSignOut = () => {
-    clearToken();
-    navigate("/login", { replace: true });
-  };
-
   return (
-    <div className={styles.dashboardContainer}>
-      <div className={styles.dashboardCard}>
-        <div className={styles.header}>
-          <p className={styles.eyebrow}>
-            <span aria-hidden="true" /> MEMBERS ONLY · YOUR ACCOUNT
-          </p>
-          <h1 className={styles.title}>
-            Welcome to your <em>corner.</em>
-          </h1>
-          <p className={styles.subtitle}>
-            You are signed in. Your orders, favorites, and preferences live here.
-          </p>
-        </div>
+    <>
+      <AdminTitle
+        eyebrow="ADMIN DASHBOARD"
+        title={
+          <>
+            Welcome to the <em>console.</em>
+          </>
+        }
+        description="Manage the people and the menu behind the counter from one place."
+      />
 
-        <div className={styles.actions}>
-          <Link className={styles.primaryButton} to="/">
-            Back to the shop ↗
+      <div className={styles.grid}>
+        {sections.map((section) => (
+          <Link key={section.to} className={styles.card} to={section.to}>
+            <h2 className={styles.cardTitle}>{section.title}</h2>
+            <p className={styles.cardDescription}>{section.description}</p>
+            <span className={styles.cardAction}>
+              Open {section.title.toLowerCase()} <span aria-hidden="true">↗</span>
+            </span>
           </Link>
-          <button className={styles.secondaryButton} type="button" onClick={handleSignOut}>
-            Sign Out
-          </button>
-        </div>
+        ))}
       </div>
-    </div>
+    </>
   );
 }
 
