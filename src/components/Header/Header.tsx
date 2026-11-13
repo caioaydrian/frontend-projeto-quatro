@@ -11,7 +11,7 @@ export function Header() {
     <header className={styles.siteHeader}>
       <NavLink
         className={styles.brand}
-        to="#home"
+        to="/#home"
         aria-label="Dark Coffee Shop home"
         onClick={closeMenu}
       >
@@ -38,16 +38,16 @@ export function Header() {
         className={`${styles.siteNav} ${menuOpen ? styles.isOpen : ""}`}
         aria-label="Main navigation"
       >
-        <NavLink to="#home" onClick={closeMenu}>
+        <NavLink to="/#home" onClick={closeMenu}>
           Home
         </NavLink>
-        <NavLink to="#story" onClick={closeMenu}>
+        <NavLink to="/#story" onClick={closeMenu}>
           Our Story
         </NavLink>
-        <NavLink to="#menu" onClick={closeMenu}>
+        <NavLink to="/#menu" onClick={closeMenu}>
           The Menu
         </NavLink>
-        <NavLink to="#visit" onClick={closeMenu}>
+        <NavLink to="/#visit" onClick={closeMenu}>
           Find Us
         </NavLink>
         <NavLink to="/login" onClick={closeMenu}>
