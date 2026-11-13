@@ -1,0 +1,17 @@
+.message {
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--accent);
+}
+
+.error {
+  margin-top: 16px;
+  font-size: 13px;
+  color: #d97b7b;
+}
+
+.stateText {
+  margin-top: 16px;
+  color: var(--muted);
+  font-size: 13px;
+}
