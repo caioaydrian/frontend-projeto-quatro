@@ -4,6 +4,7 @@ import { validateEmail } from "../../utils/validation";
 import { useAuth } from "../../contexts/useAuth";
 import { apiFetch } from "../../utils/api";
 import styles from "./Login.module.css";
+import { Button } from "../../components";
 
 interface LocationState {
   registered?: boolean;
@@ -164,9 +165,9 @@ export function Login() {
             )}
           </div>
 
-          <button type="submit" className={styles.submitButton} disabled={isSubmitting}>
+          <Button type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Signing in..." : "Sign In ↗"}
-          </button>
+          </Button>
         </form>
 
         <div className={styles.footerLinks}>

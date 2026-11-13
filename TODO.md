@@ -12,6 +12,7 @@
 [x] Criar a página inicial (landing page)
 [x] Criar a página de registro de usuários
 [x] Criar a página de login de usuários (estrutura básica e destino pós-cadastro)
-[] Implementar autenticação de usuários
+[x] Implementar autenticação de usuários
 [x] Criar rota de register para o sign-in ao invés de usar o cadastro de usuários diretamente
-[] Validar token no frontend
+[x] Validar token no frontend
+[x] Contexto global de autenticação (AuthContext com dados do usuário)

@@ -134,36 +134,6 @@
   margin-top: 2px;
 }
 
-.submitButton {
-  margin-top: 8px;
-  display: inline-flex;
-  width: 100%;
-  min-height: 46px;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  background: var(--accent);
-  border: 1px solid var(--accent);
-  color: var(--background);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition:
-    background 180ms ease,
-    opacity 180ms ease;
-}
-
-.submitButton:hover:not(:disabled) {
-  background: #d9ad79;
-}
-
-.submitButton:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
 .footerLinks {
   margin-top: 24px;
   text-align: center;

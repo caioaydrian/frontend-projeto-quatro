@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { cleanCPF, formatCPF, validateEmail } from "../../utils/validation";
 import { apiFetch } from "../../utils/api";
 import styles from "./Register.module.css";
+import { Button } from "../../components";
 
 interface FieldErrors {
   name?: string;
@@ -250,13 +251,9 @@ export function Register() {
             )}
           </div>
 
-          <button
-            type="submit"
-            className={styles.submitButton}
-            disabled={isSubmitting || Boolean(successMessage)}
-          >
+          <Button type="submit" disabled={isSubmitting || Boolean(successMessage)}>
             {isSubmitting ? "Creating account..." : "Register ↗"}
-          </button>
+          </Button>
         </form>
 
         <div className={styles.footerLinks}>
