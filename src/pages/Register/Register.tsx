@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { cleanCPF, formatCPF, validateEmail } from "../../utils/validation";
 import { apiFetch } from "../../utils/api";
 import styles from "./Register.module.css";
-import { Button } from "../../components";
+import { Button, Input } from "../../components";
 
 interface FieldErrors {
   name?: string;
@@ -155,13 +155,13 @@ export function Register() {
             <label className={styles.label} htmlFor="name">
               Full Name *
             </label>
-            <input
+            <Input
               id="name"
               name="name"
               type="text"
               autoComplete="name"
               required
-              className={`${styles.input} ${fieldErrors.name ? styles.inputError : ""}`}
+              error={fieldErrors.name}
               placeholder="e.g. Clara Mendes"
               value={formData.name}
               onChange={handleChange}
@@ -174,13 +174,13 @@ export function Register() {
             <label className={styles.label} htmlFor="email">
               Email *
             </label>
-            <input
+            <Input
               id="email"
               name="email"
               type="email"
               autoComplete="email"
               required
-              className={`${styles.input} ${fieldErrors.email ? styles.inputError : ""}`}
+              error={fieldErrors.email}
               placeholder="your@email.com"
               value={formData.email}
               onChange={handleChange}
@@ -193,14 +193,14 @@ export function Register() {
             <label className={styles.label} htmlFor="cpf">
               CPF *
             </label>
-            <input
+            <Input
               id="cpf"
               name="cpf"
               type="text"
               inputMode="numeric"
               maxLength={14}
               required
-              className={`${styles.input} ${fieldErrors.cpf ? styles.inputError : ""}`}
+              error={fieldErrors.cpf}
               placeholder="000.000.000-00"
               value={formData.cpf}
               onChange={handleChange}
@@ -213,13 +213,13 @@ export function Register() {
             <label className={styles.label} htmlFor="password">
               Password *
             </label>
-            <input
+            <Input
               id="password"
               name="password"
               type="password"
               autoComplete="new-password"
               required
-              className={`${styles.input} ${fieldErrors.password ? styles.inputError : ""}`}
+              error={fieldErrors.password}
               placeholder="Enter your password"
               value={formData.password}
               onChange={handleChange}
@@ -234,13 +234,13 @@ export function Register() {
             <label className={styles.label} htmlFor="confirmPassword">
               Confirm Password *
             </label>
-            <input
+            <Input
               id="confirmPassword"
               name="confirmPassword"
               type="password"
               autoComplete="new-password"
               required
-              className={`${styles.input} ${fieldErrors.confirmPassword ? styles.inputError : ""}`}
+              error={fieldErrors.confirmPassword}
               placeholder="Confirm your password"
               value={formData.confirmPassword}
               onChange={handleChange}

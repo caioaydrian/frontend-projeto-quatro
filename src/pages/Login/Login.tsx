@@ -4,7 +4,7 @@ import { validateEmail } from "../../utils/validation";
 import { useAuth } from "../../contexts/useAuth";
 import { apiFetch } from "../../utils/api";
 import styles from "./Login.module.css";
-import { Button } from "../../components";
+import { Button, Input } from "../../components";
 
 interface LocationState {
   registered?: boolean;
@@ -121,12 +121,12 @@ export function Login() {
             <label className={styles.label} htmlFor="login-email">
               Email
             </label>
-            <input
+            <Input
               id="login-email"
               type="email"
               autoComplete="email"
               required
-              className={`${styles.input} ${fieldErrors.email ? styles.inputError : ""}`}
+              error={fieldErrors.email}
               placeholder="your@email.com"
               value={email}
               onChange={(e) => {
@@ -144,12 +144,12 @@ export function Login() {
             <label className={styles.label} htmlFor="login-password">
               Password
             </label>
-            <input
+            <Input
               id="login-password"
               type="password"
               autoComplete="current-password"
               required
-              className={`${styles.input} ${fieldErrors.password ? styles.inputError : ""}`}
+              error={fieldErrors.password}
               placeholder="Your password"
               value={password}
               onChange={(e) => {
