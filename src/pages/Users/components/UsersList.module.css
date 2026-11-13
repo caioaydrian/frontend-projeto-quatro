@@ -1,0 +1,60 @@
+.list {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  border: 1px solid rgb(234 228 219 / 10%);
+  background: rgba(234, 228, 219, 0.02);
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+.badge {
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: rgb(234 228 219 / 10%);
+  color: var(--muted);
+}
+
+.badgeAdmin {
+  background: rgba(184, 155, 114, 0.2);
+  color: var(--accent);
+}
+
+.meta {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
