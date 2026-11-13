@@ -1,0 +1,73 @@
+.form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fieldsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.selectGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.required {
+  color: var(--accent);
+  margin-left: 2px;
+}
+
+.select {
+  width: 100%;
+  padding: 10px 14px;
+  background: #171613;
+  border: 1px solid rgb(234 228 219 / 15%);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 14px;
+  border-radius: 2px;
+  outline: none;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+.select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.selectError {
+  border-color: #ef4444 !important;
+}
+
+.error {
+  color: #f87171;
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
