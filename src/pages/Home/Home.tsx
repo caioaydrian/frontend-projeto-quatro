@@ -12,14 +12,16 @@ const drinks = [
     name: "Midnight Pour Over",
     description: "Slow-brewed single origin with notes of cocoa and plum.",
     price: "$5.00",
-    image: "https://images.unsplash.com/photo-1497515114629-f71d768fd07c?auto=format&fit=crop&w=900&q=85",
+    image:
+      "https://images.unsplash.com/photo-1497515114629-f71d768fd07c?auto=format&fit=crop&w=900&q=85",
     label: "SLOW & STEADY",
   },
   {
     name: "Cinnamon Dusk",
     description: "A smooth oat latte finished with warm cinnamon and honey.",
     price: "$6.00",
-    image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=900&q=85",
+    image:
+      "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=900&q=85",
     label: "A LITTLE COMFORT",
   },
 ];
@@ -38,7 +40,8 @@ export function Home() {
             softer <em>side.</em>
           </h1>
           <p className={styles.heroDescription}>
-            Thoughtfully brewed coffee, slow mornings, and a little room to breathe. Come in from the noise.
+            Thoughtfully brewed coffee, slow mornings, and a little room to breathe. Come in from
+            the noise.
           </p>
           <div className={styles.heroActions}>
             <a className={styles.buttonPrimary} href="#menu">
@@ -47,18 +50,6 @@ export function Home() {
             <a className={styles.textLink} href="#story">
               A little about us <span aria-hidden="true">↓</span>
             </a>
-          </div>
-          <div className={styles.heroNote}>
-            <div className={styles.avatarStack} aria-hidden="true">
-              <span>J</span>
-              <span>M</span>
-              <span>A</span>
-            </div>
-            <p>
-              <strong>A favorite little corner</strong>
-              <br />
-              Loved by our local community
-            </p>
           </div>
         </div>
 
@@ -102,10 +93,14 @@ export function Home() {
           </h2>
         </div>
         <p className={styles.welcomeCopy}>
-          We believe the best things happen when you take your time. So we source with intention, brew with care, and
-          save you a seat by the window.
+          We believe the best things happen when you take your time. So we source with intention,
+          brew with care, and save you a seat by the window.
         </p>
-        <a className={styles.roundLink} href="#visit" aria-label="Find your way to Dark Coffee Shop">
+        <a
+          className={styles.roundLink}
+          href="#visit"
+          aria-label="Find your way to Dark Coffee Shop"
+        >
           <span>
             COME
             <br />

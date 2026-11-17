@@ -21,7 +21,7 @@
   align-items: center;
   gap: 11px;
   color: var(--accent);
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.19em;
 }
@@ -49,11 +49,11 @@
 }
 
 .heroDescription {
-  max-width: 390px;
+  max-width: 440px;
   margin-top: 23px;
   color: #aaa399;
-  font-size: 13px;
-  line-height: 1.9;
+  font-size: 16px;
+  line-height: 1.8;
 }
 
 .heroActions {
@@ -65,14 +65,14 @@
 
 .button {
   display: inline-flex;
-  min-height: 46px;
+  min-height: 48px;
   align-items: center;
   justify-content: center;
-  gap: 18px;
-  padding: 0 19px;
+  gap: 16px;
+  padding: 0 24px;
   border: 1px solid rgb(200 157 106 / 65%);
   color: var(--text);
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 600;
   transition:
     background 180ms ease,
@@ -113,7 +113,7 @@
 
 .textLink {
   color: #d8d1c8;
-  font-size: 11px;
+  font-size: 14px;
   transition: color 180ms ease;
 }
 
@@ -124,53 +124,7 @@
 .textLink span {
   margin-left: 7px;
   color: var(--accent);
-  font-size: 15px;
-}
-
-.heroNote {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-top: 52px;
-}
-
-.avatarStack {
-  display: flex;
-  padding-left: 3px;
-}
-
-.avatarStack span {
-  display: grid;
-  width: 29px;
-  height: 29px;
-  place-items: center;
-  margin-left: -4px;
-  border: 2px solid var(--background);
-  border-radius: 50%;
-  background: #665347;
-  color: #f2e8dd;
-  font-family: var(--serif);
-  font-size: 11px;
-}
-
-.avatarStack span:nth-child(2) {
-  background: #817258;
-}
-
-.avatarStack span:nth-child(3) {
-  background: #78594c;
-}
-
-.heroNote p {
-  color: var(--muted);
-  font-size: 9px;
-  line-height: 1.7;
-}
-
-.heroNote strong {
-  color: #e4ddd3;
-  font-size: 10px;
-  font-weight: 500;
+  font-size: 16px;
 }
 
 .heroVisual {
@@ -204,10 +158,11 @@
   display: flex;
   align-items: center;
   gap: 9px;
-  padding: 11px 13px;
+  padding: 10px 14px;
   background: rgb(24 23 20 / 83%);
   color: #e5dfd6;
-  font-size: 8px;
+  font-size: 11px;
+  font-weight: 500;
   letter-spacing: 0.12em;
 }
 
@@ -216,8 +171,8 @@
 }
 
 .openDot {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: #9ab58b;
   box-shadow: 0 0 9px rgb(154 181 139 / 70%);
@@ -232,7 +187,7 @@
   align-items: center;
   gap: 13px;
   color: #e5dfd6;
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.16em;
 }
 
@@ -247,8 +202,8 @@
   right: -30px;
   bottom: 77px;
   display: grid;
-  width: 105px;
-  height: 105px;
+  width: 116px;
+  height: 116px;
   align-content: center;
   justify-items: center;
   gap: 6px;
@@ -256,13 +211,14 @@
   border-radius: 50%;
   background: var(--background);
   color: #d9c9b4;
-  font-size: 6px;
+  font-size: 8px;
+  font-weight: 500;
   letter-spacing: 0.14em;
 }
 
 .stampIcon {
   color: var(--accent);
-  font-size: 23px;
+  font-size: 24px;
 }
 
 .scrollCue {
@@ -272,8 +228,8 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  color: #8f887d;
-  font-size: 8px;
+  color: #a49e93;
+  font-size: 11px;
   letter-spacing: 0.17em;
 }
 
@@ -306,25 +262,26 @@
 }
 
 .welcomeCopy {
-  max-width: 380px;
+  max-width: 420px;
   color: #aaa399;
-  font-size: 12px;
-  line-height: 2;
+  font-size: 15px;
+  line-height: 1.8;
 }
 
 .roundLink {
   display: grid;
-  width: 91px;
-  height: 91px;
+  width: 104px;
+  height: 104px;
   align-content: center;
   justify-items: center;
   gap: 5px;
   border: 1px solid rgb(200 157 106 / 55%);
   border-radius: 50%;
   color: var(--accent);
-  font-size: 8px;
+  font-size: 10px;
+  font-weight: 600;
   letter-spacing: 0.1em;
-  line-height: 1.5;
+  line-height: 1.4;
   text-align: center;
   transition: background 180ms ease;
 }
@@ -334,7 +291,7 @@
 }
 
 .roundLink b {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 400;
 }
 
@@ -398,7 +355,7 @@
   background: var(--background);
   color: var(--accent);
   font-family: var(--serif);
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .drinkDetails {
@@ -409,13 +366,15 @@
   display: flex;
   justify-content: space-between;
   color: var(--accent);
-  font-size: 8px;
+  font-size: 11px;
+  font-weight: 600;
   letter-spacing: 0.13em;
 }
 
 .drinkMeta span:last-child {
   color: #ded6ca;
-  font-size: 11px;
+  font-size: 14px;
+  font-weight: 600;
   letter-spacing: 0;
 }
 
@@ -429,9 +388,9 @@
 .drinkDetails p {
   max-width: 300px;
   margin-top: 7px;
-  color: var(--muted);
-  font-size: 10px;
-  line-height: 1.8;
+  color: #aaa399;
+  font-size: 13px;
+  line-height: 1.6;
 }
 
 .visitSection {
@@ -442,9 +401,14 @@
   overflow: hidden;
   padding: 75px max(56px, calc((100% - 1180px) / 2));
   background:
-    linear-gradient(90deg, rgb(24 23 20 / 98%) 0%, rgb(24 23 20 / 94%) 45%, rgb(24 23 20 / 64%) 100%),
-    url("https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=1800&q=85") center 50% /
-      cover;
+    linear-gradient(
+      90deg,
+      rgb(24 23 20 / 98%) 0%,
+      rgb(24 23 20 / 94%) 45%,
+      rgb(24 23 20 / 64%) 100%
+    ),
+    url("https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=1800&q=85")
+      center 50% / cover;
 }
 
 .visitContent {
@@ -462,11 +426,11 @@
 }
 
 .visitContent > p:not(.eyebrow) {
-  max-width: 310px;
+  max-width: 340px;
   margin-top: 18px;
   color: #aaa399;
-  font-size: 11px;
-  line-height: 1.9;
+  font-size: 15px;
+  line-height: 1.8;
 }
 
 .visitDetails {
@@ -481,7 +445,8 @@
 
 .detailLabel {
   color: var(--accent);
-  font-size: 8px;
+  font-size: 11px;
+  font-weight: 600;
   letter-spacing: 0.17em;
 }
 
@@ -489,7 +454,7 @@
   margin-top: 8px;
   color: #ded7cd;
   font-family: var(--serif);
-  font-size: 17px;
+  font-size: 18px;
   line-height: 1.6;
 }
 
@@ -578,7 +543,7 @@
   .heroDescription {
     max-width: 340px;
     margin-top: 18px;
-    font-size: 12px;
+    font-size: 14px;
   }
 
   .heroActions {
@@ -590,16 +555,12 @@
 
   .heroActions .button {
     gap: 10px;
-    padding: 0 13px;
-    font-size: 10px;
+    padding: 0 16px;
+    font-size: 13px;
   }
 
   .heroActions .textLink {
-    font-size: 10px;
-  }
-
-  .heroNote {
-    margin-top: 27px;
+    font-size: 13px;
   }
 
   .heroVisual {
@@ -610,13 +571,13 @@
   .coffeeStamp {
     right: -14px;
     bottom: 50px;
-    width: 86px;
-    height: 86px;
-    font-size: 5px;
+    width: 96px;
+    height: 96px;
+    font-size: 7px;
   }
 
   .stampIcon {
-    font-size: 19px;
+    font-size: 20px;
   }
 
   .scrollCue {
@@ -639,11 +600,13 @@
     grid-column: 1 / -1;
     grid-row: 2;
     max-width: 420px;
+    font-size: 14px;
   }
 
   .roundLink {
-    width: 77px;
-    height: 77px;
+    width: 86px;
+    height: 86px;
+    font-size: 9px;
   }
 
   .menuSection {

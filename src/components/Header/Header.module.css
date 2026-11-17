@@ -3,7 +3,7 @@
   z-index: 5;
   display: flex;
   width: min(100% - 112px, 1376px);
-  height: 92px;
+  height: 76px;
   align-items: center;
   justify-content: space-between;
   margin: 0 auto;
@@ -18,28 +18,28 @@
 
 .brandMark {
   display: grid;
-  width: 39px;
-  height: 39px;
+  width: 36px;
+  height: 36px;
   place-items: center;
   border: 1px solid var(--accent);
   border-radius: 50%;
   color: var(--accent);
   font-family: var(--serif);
-  font-size: 24px;
+  font-size: 22px;
   font-style: italic;
 }
 
 .brandName {
   display: grid;
   gap: 3px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.2em;
 }
 
 .brandName span {
   color: var(--muted);
-  font-size: 8px;
+  font-size: 9px;
   font-weight: 500;
   letter-spacing: 0.27em;
 }
@@ -50,7 +50,7 @@
   align-items: center;
   gap: 37px;
   color: #c2bcb2;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .siteNav > a:not(.navCta) {
@@ -63,14 +63,14 @@
 
 .navCta {
   display: inline-flex;
-  min-height: 46px;
+  min-height: 40px;
   align-items: center;
   justify-content: center;
-  gap: 18px;
-  padding: 0 19px;
+  gap: 14px;
+  padding: 0 18px;
   border: 1px solid rgb(200 157 106 / 65%);
   color: var(--text);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
   transition:
     background 180ms ease,
