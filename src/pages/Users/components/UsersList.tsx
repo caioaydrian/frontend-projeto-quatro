@@ -12,15 +12,17 @@ interface UsersListProps {
 }
 
 export function UsersList({
-  items,
+  items = [],
   currentUserId,
   onEdit,
   onDelete,
   disabled = false,
 }: UsersListProps) {
+  const userList = Array.isArray(items) ? items : [];
+
   return (
     <div className={styles.list}>
-      {items.map((user) => {
+      {userList.map((user) => {
         const isSelf = currentUserId === user.id;
 
         return (

@@ -1,5 +1,6 @@
 import { useState, type FormEvent, type ChangeEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/useAuth";
 import { cleanCPF, formatCPF, validateEmail } from "../../utils/validation";
 import { apiFetch } from "../../utils/api";
 import styles from "./Register.module.css";
@@ -15,6 +16,7 @@ interface FieldErrors {
 
 export function Register() {
   const navigate = useNavigate();
+  const { isAuthenticated, user } = useAuth();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -28,6 +30,10 @@ export function Register() {
   const [apiError, setApiError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  if (isAuthenticated) {
+    return <Navigate to={user?.role === "admin" ? "/admin" : "/"} replace />;
+  }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

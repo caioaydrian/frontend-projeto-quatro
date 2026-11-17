@@ -27,7 +27,7 @@ export function getUserFromToken(token: string | null): User | null {
       id: data.id,
       name: data.name || "",
       email: data.email || "",
-      role: data.role || "client",
+      role: String(data.role || "client").toLowerCase(),
       cpf: "",
     };
   } catch {

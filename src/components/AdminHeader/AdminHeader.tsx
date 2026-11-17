@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import styles from "./AdminHeader.module.css";
-import { AdminUserMenu } from "../AdminUserMenu/AdminUserMenu";
+import { UserMenu } from "../UserMenu";
 
 const navItems = [
   { to: "/admin", label: "Dashboard", end: true },
@@ -60,7 +60,7 @@ export function AdminHeader() {
             View site ↗
           </Link>
 
-          <AdminUserMenu onAction={closeMenu} />
+          <UserMenu onAction={closeMenu} />
         </nav>
       </div>
     </header>
