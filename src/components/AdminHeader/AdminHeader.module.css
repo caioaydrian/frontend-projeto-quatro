@@ -76,8 +76,14 @@
 }
 
 .siteLink {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid transparent;
   color: var(--muted);
-  transition: color 180ms ease;
+  transition:
+    color 180ms ease,
+    border-color 180ms ease;
 }
 
 .siteLink:hover {
