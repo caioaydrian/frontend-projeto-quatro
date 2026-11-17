@@ -84,27 +84,6 @@
   color: var(--accent);
 }
 
-.signOut {
-  min-height: 40px;
-  padding: 0 16px;
-  border: 1px solid rgb(234 228 219 / 20%);
-  background: transparent;
-  color: var(--text);
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition:
-    border-color 180ms ease,
-    color 180ms ease;
-}
-
-.signOut:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
 .menuToggle {
   display: none;
 }
@@ -158,28 +137,6 @@
 
   .siteLink {
     padding: 14px 0;
-  }
-
-  .signOut {
-    margin-top: 16px;
-  }
-
-  .userInfo {
-    padding: 12px 0;
     border-bottom: 1px solid rgb(234 228 219 / 8%);
   }
-}
-
-.userInfo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--muted);
-  font-size: 11px;
-  letter-spacing: 0.05em;
-}
-
-.userName {
-  color: var(--text);
-  font-weight: 600;
 }
