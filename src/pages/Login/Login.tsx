@@ -143,7 +143,6 @@ export function Login() {
               }}
               disabled={isSubmitting}
             />
-            {fieldErrors.email && <span className={styles.fieldError}>{fieldErrors.email}</span>}
           </div>
 
           <div className={styles.fieldGroup}>
@@ -166,9 +165,6 @@ export function Login() {
               }}
               disabled={isSubmitting}
             />
-            {fieldErrors.password && (
-              <span className={styles.fieldError}>{fieldErrors.password}</span>
-            )}
           </div>
 
           <Button type="submit" disabled={isSubmitting}>

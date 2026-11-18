@@ -1,7 +1,7 @@
 import { useEffect, useState, type FormEvent, type ChangeEvent } from "react";
 import { Input } from "../../../components/Input";
 import { Button } from "../../../components/Button";
-import { cleanCPF, formatCPF, validateEmail } from "../../../utils/validation";
+import { cleanCPF, formatCPF, validateEmail, validatePasswordLevel } from "../../../utils/validation";
 import type { User } from "../../../types/user";
 import type { CreateUserInput, UpdateUserInput } from "../../../services/users";
 import styles from "./UsersForm.module.css";
@@ -32,6 +32,8 @@ export function UsersForm({ editingItem, onSubmit, onCancel, isSubmitting }: Use
   });
 
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+
+  const passwordStrength = formData.password ? validatePasswordLevel(formData.password) : null;
 
   useEffect(() => {
     if (editingItem) {
@@ -89,10 +91,11 @@ export function UsersForm({ editingItem, onSubmit, onCancel, isSubmitting }: Use
       errors.cpf = "CPF must contain 11 digits.";
     }
 
+    const passwordCheck = validatePasswordLevel(formData.password);
     if (!formData.password) {
       errors.password = "Password is required.";
-    } else if (formData.password.length < 8) {
-      errors.password = "Password must have at least 8 characters.";
+    } else if (!passwordCheck.isValid) {
+      errors.password = passwordCheck.message || "Password is too weak.";
     }
 
     if (!formData.confirmPassword) {
@@ -203,6 +206,24 @@ export function UsersForm({ editingItem, onSubmit, onCancel, isSubmitting }: Use
             disabled={isSubmitting}
             error={fieldErrors.password}
           />
+          {passwordStrength && (
+            <div className={styles.passwordStrength}>
+              <span className={styles.strengthText}>Strength:</span>
+              <span
+                className={`${styles.strengthValue} ${
+                  styles[
+                    passwordStrength.level === "Strong"
+                      ? "strengthStrong"
+                      : passwordStrength.level === "Medium"
+                      ? "strengthMedium"
+                      : "strengthWeak"
+                  ]
+                }`}
+              >
+                {passwordStrength.level}
+              </span>
+            </div>
+          )}
         </div>
 
         <div className={styles.field}>

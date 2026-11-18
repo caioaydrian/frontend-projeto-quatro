@@ -9,6 +9,45 @@ export function cleanCPF(cpf: string): string {
   return cpf.replace(/\D/g, "");
 }
 
+export interface PasswordLevelResult {
+  isValid: boolean;
+  level: "Weak" | "Medium" | "Strong";
+  message?: string;
+}
+
+export function validatePasswordLevel(password: string): PasswordLevelResult {
+  if (typeof password !== "string" || password.length < 8) {
+    return {
+      isValid: false,
+      level: "Weak",
+      message: "Password must have at least 8 characters.",
+    };
+  }
+
+  const hasUpper = /[A-Z]/.test(password);
+  const hasLower = /[a-z]/.test(password);
+  const hasNumber = /[0-9]/.test(password);
+  const hasSpecial = /[^A-Za-z0-9]/.test(password);
+
+  const criteriaCount = [hasUpper, hasLower, hasNumber, hasSpecial].filter(Boolean).length;
+
+  if (criteriaCount < 3) {
+    return {
+      isValid: false,
+      level: "Weak",
+      message:
+        "Password must meet at least 3 of: uppercase, lowercase, number, or special character.",
+    };
+  }
+
+  const level = criteriaCount === 4 ? "Strong" : "Medium";
+
+  return {
+    isValid: true,
+    level,
+  };
+}
+
 export function formatCPF(value: string): string {
   const digits = cleanCPF(value).slice(0, 11);
 
