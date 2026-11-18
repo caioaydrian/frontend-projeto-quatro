@@ -1,6 +1,13 @@
 import { useState, type FormEvent, type ChangeEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { cleanCPF, formatCPF, validateEmail } from "../../utils/validation";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/useAuth";
+import {
+  cleanCPF,
+  formatCPF,
+  validateCPF,
+  validateEmail,
+  validatePasswordLevel,
+} from "../../utils/validation";
 import { apiFetch } from "../../utils/api";
 import styles from "./Register.module.css";
 import { Button, Input } from "../../components";
@@ -15,6 +22,7 @@ interface FieldErrors {
 
 export function Register() {
   const navigate = useNavigate();
+  const { isAuthenticated, user } = useAuth();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -28,6 +36,12 @@ export function Register() {
   const [apiError, setApiError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const passwordStrength = formData.password ? validatePasswordLevel(formData.password) : null;
+
+  if (isAuthenticated) {
+    return <Navigate to={user?.role === "admin" ? "/admin" : "/"} replace />;
+  }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -59,12 +73,15 @@ export function Register() {
     const cpfDigits = cleanCPF(formData.cpf);
     if (!cpfDigits) {
       errors.cpf = "CPF is required.";
-    } else if (cpfDigits.length !== 11) {
-      errors.cpf = "CPF must contain 11 digits.";
+    } else if (!validateCPF(formData.cpf)) {
+      errors.cpf = "Please enter a valid CPF.";
     }
 
+    const passwordCheck = validatePasswordLevel(formData.password);
     if (!formData.password) {
       errors.password = "Password is required.";
+    } else if (!passwordCheck.isValid) {
+      errors.password = passwordCheck.message || "Password is too weak.";
     }
 
     if (!formData.confirmPassword) {
@@ -167,7 +184,6 @@ export function Register() {
               onChange={handleChange}
               disabled={isSubmitting || Boolean(successMessage)}
             />
-            {fieldErrors.name && <span className={styles.fieldError}>{fieldErrors.name}</span>}
           </div>
 
           <div className={styles.fieldGroup}>
@@ -186,7 +202,6 @@ export function Register() {
               onChange={handleChange}
               disabled={isSubmitting || Boolean(successMessage)}
             />
-            {fieldErrors.email && <span className={styles.fieldError}>{fieldErrors.email}</span>}
           </div>
 
           <div className={styles.fieldGroup}>
@@ -206,7 +221,6 @@ export function Register() {
               onChange={handleChange}
               disabled={isSubmitting || Boolean(successMessage)}
             />
-            {fieldErrors.cpf && <span className={styles.fieldError}>{fieldErrors.cpf}</span>}
           </div>
 
           <div className={styles.fieldGroup}>
@@ -225,8 +239,23 @@ export function Register() {
               onChange={handleChange}
               disabled={isSubmitting || Boolean(successMessage)}
             />
-            {fieldErrors.password && (
-              <span className={styles.fieldError}>{fieldErrors.password}</span>
+            {passwordStrength && (
+              <div className={styles.passwordStrength}>
+                <span className={styles.strengthText}>Strength:</span>
+                <span
+                  className={`${styles.strengthValue} ${
+                    styles[
+                      passwordStrength.level === "Strong"
+                        ? "strengthStrong"
+                        : passwordStrength.level === "Medium"
+                          ? "strengthMedium"
+                          : "strengthWeak"
+                    ]
+                  }`}
+                >
+                  {passwordStrength.level}
+                </span>
+              </div>
             )}
           </div>
 
@@ -246,9 +275,6 @@ export function Register() {
               onChange={handleChange}
               disabled={isSubmitting || Boolean(successMessage)}
             />
-            {fieldErrors.confirmPassword && (
-              <span className={styles.fieldError}>{fieldErrors.confirmPassword}</span>
-            )}
           </div>
 
           <Button type="submit" disabled={isSubmitting || Boolean(successMessage)}>

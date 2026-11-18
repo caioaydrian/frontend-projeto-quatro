@@ -101,7 +101,7 @@
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 820px) {
   .siteHeader {
     width: calc(100% - 40px);
     height: 72px;

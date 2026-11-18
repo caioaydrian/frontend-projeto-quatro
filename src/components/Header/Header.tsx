@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./Header.module.css";
+import { useAuth } from "../../contexts/useAuth";
+import { UserMenu } from "../UserMenu";
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { isAuthenticated } = useAuth();
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -50,12 +53,19 @@ export function Header() {
         <NavLink to="/#visit" onClick={closeMenu}>
           Find Us
         </NavLink>
-        <NavLink to="/login" onClick={closeMenu}>
-          Sign In
-        </NavLink>
-        <NavLink className={styles.navCta} to="/register" onClick={closeMenu}>
-          Register <span aria-hidden="true">↗</span>
-        </NavLink>
+
+        {isAuthenticated ? (
+          <UserMenu onAction={closeMenu} />
+        ) : (
+          <>
+            <NavLink to="/login" onClick={closeMenu}>
+              Sign In
+            </NavLink>
+            <NavLink className={styles.navCta} to="/register" onClick={closeMenu}>
+              Register <span aria-hidden="true">↗</span>
+            </NavLink>
+          </>
+        )}
       </nav>
     </header>
   );

@@ -1,33 +1,45 @@
 import { useEffect, useState, type FormEvent, type ChangeEvent } from "react";
 import { Input } from "../../../components/Input";
 import { Button } from "../../../components/Button";
-import { cleanCPF, formatCPF, validateEmail } from "../../../utils/validation";
+import {
+  cleanCPF,
+  formatCPF,
+  validateCPF,
+  validateEmail,
+  validatePasswordLevel,
+} from "../../../utils/validation";
 import type { User } from "../../../types/user";
 import type { CreateUserInput, UpdateUserInput } from "../../../services/users";
 import styles from "./UsersForm.module.css";
 
 interface UsersFormProps {
   editingItem: User | null;
-  onSubmit: (data: CreateUserInput | UpdateUserInput) => Promise<void>;
+  onSubmit: (data: CreateUserInput | UpdateUserInput) => Promise<boolean>;
   onCancel: () => void;
   isSubmitting: boolean;
 }
 
-export function UsersForm({
-  editingItem,
-  onSubmit,
-  onCancel,
-  isSubmitting,
-}: UsersFormProps) {
+interface FieldErrors {
+  name?: string;
+  email?: string;
+  cpf?: string;
+  password?: string;
+  confirmPassword?: string;
+}
+
+export function UsersForm({ editingItem, onSubmit, onCancel, isSubmitting }: UsersFormProps) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     cpf: "",
     password: "",
+    confirmPassword: "",
     role: "client",
   });
 
-  const [formError, setFormError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+
+  const passwordStrength = formData.password ? validatePasswordLevel(formData.password) : null;
 
   useEffect(() => {
     if (editingItem) {
@@ -36,6 +48,7 @@ export function UsersForm({
         email: editingItem.email,
         cpf: formatCPF(editingItem.cpf),
         password: "",
+        confirmPassword: "",
         role: editingItem.role || "client",
       });
     } else {
@@ -44,10 +57,11 @@ export function UsersForm({
         email: "",
         cpf: "",
         password: "",
+        confirmPassword: "",
         role: "client",
       });
     }
-    setFormError("");
+    setFieldErrors({});
   }, [editingItem]);
 
   function handleChange(e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
@@ -56,74 +70,89 @@ export function UsersForm({
       ...prev,
       [name]: name === "cpf" ? formatCPF(value) : value,
     }));
-    if (formError) setFormError("");
+    if (fieldErrors[name as keyof FieldErrors]) {
+      setFieldErrors((prev) => ({ ...prev, [name]: undefined }));
+    }
+  }
+
+  function validateForm(): boolean {
+    const errors: FieldErrors = {};
+    const trimmedName = formData.name.trim();
+    const trimmedEmail = formData.email.trim();
+    const rawCpf = cleanCPF(formData.cpf);
+
+    if (!trimmedName) {
+      errors.name = "Full name is required.";
+    }
+
+    if (!trimmedEmail) {
+      errors.email = "Email is required.";
+    } else if (!validateEmail(trimmedEmail)) {
+      errors.email = "Please enter a valid email address.";
+    }
+
+    if (!rawCpf) {
+      errors.cpf = "CPF is required.";
+    } else if (!validateCPF(formData.cpf)) {
+      errors.cpf = "Please enter a valid CPF.";
+    }
+
+    const passwordCheck = validatePasswordLevel(formData.password);
+    if (!formData.password) {
+      errors.password = "Password is required.";
+    } else if (!passwordCheck.isValid) {
+      errors.password = passwordCheck.message || "Password is too weak.";
+    }
+
+    if (!formData.confirmPassword) {
+      errors.confirmPassword = "Confirm password is required.";
+    } else if (formData.password !== formData.confirmPassword) {
+      errors.confirmPassword = "Passwords do not match.";
+    }
+
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
   }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
 
+    if (!validateForm()) {
+      return;
+    }
+
     const trimmedName = formData.name.trim();
+    const trimmedEmail = formData.email.trim().toLowerCase();
     const rawCpf = cleanCPF(formData.cpf);
-
-    if (!trimmedName) {
-      setFormError("Name is required.");
-      return;
-    }
-
-    if (!editingItem) {
-      const trimmedEmail = formData.email.trim();
-      if (!trimmedEmail) {
-        setFormError("Email is required.");
-        return;
-      }
-      if (!validateEmail(trimmedEmail)) {
-        setFormError("Please enter a valid email address.");
-        return;
-      }
-    }
-
-    if (!rawCpf || rawCpf.length !== 11) {
-      setFormError("CPF must contain 11 digits.");
-      return;
-    }
-
-    if (!formData.password) {
-      setFormError("Password is required.");
-      return;
-    }
-
-    if (formData.password.length < 8) {
-      setFormError("Password must have at least 8 characters.");
-      return;
-    }
-
-    setFormError("");
 
     if (editingItem) {
       await onSubmit({
         name: trimmedName,
+        email: trimmedEmail,
         cpf: rawCpf,
         password: formData.password,
         role: formData.role,
       });
     } else {
-      await onSubmit({
+      const success = await onSubmit({
         name: trimmedName,
-        email: formData.email.trim().toLowerCase(),
+        email: trimmedEmail,
         cpf: rawCpf,
         password: formData.password,
         role: formData.role,
       });
-    }
 
-    if (!editingItem) {
-      setFormData({
-        name: "",
-        email: "",
-        cpf: "",
-        password: "",
-        role: "client",
-      });
+      if (success) {
+        setFormData({
+          name: "",
+          email: "",
+          cpf: "",
+          password: "",
+          confirmPassword: "",
+          role: "client",
+        });
+        setFieldErrors({});
+      }
     }
   }
 
@@ -138,6 +167,7 @@ export function UsersForm({
             value={formData.name}
             onChange={handleChange}
             disabled={isSubmitting}
+            error={fieldErrors.name}
           />
         </div>
 
@@ -150,6 +180,7 @@ export function UsersForm({
             value={formData.email}
             onChange={handleChange}
             disabled={isSubmitting || Boolean(editingItem)}
+            error={fieldErrors.email}
           />
           {editingItem && (
             <span className={styles.hint}>Email cannot be changed once created.</span>
@@ -165,6 +196,7 @@ export function UsersForm({
             value={formData.cpf}
             onChange={handleChange}
             disabled={isSubmitting}
+            error={fieldErrors.cpf}
           />
         </div>
 
@@ -173,10 +205,44 @@ export function UsersForm({
             label="Password *"
             name="password"
             type="password"
-            placeholder={editingItem ? "New or current password" : "At least 8 characters"}
+            autoComplete="new-password"
+            placeholder="Enter password"
             value={formData.password}
             onChange={handleChange}
             disabled={isSubmitting}
+            error={fieldErrors.password}
+          />
+          {passwordStrength && (
+            <div className={styles.passwordStrength}>
+              <span className={styles.strengthText}>Strength:</span>
+              <span
+                className={`${styles.strengthValue} ${
+                  styles[
+                    passwordStrength.level === "Strong"
+                      ? "strengthStrong"
+                      : passwordStrength.level === "Medium"
+                        ? "strengthMedium"
+                        : "strengthWeak"
+                  ]
+                }`}
+              >
+                {passwordStrength.level}
+              </span>
+            </div>
+          )}
+        </div>
+
+        <div className={styles.field}>
+          <Input
+            label="Confirm Password *"
+            name="confirmPassword"
+            type="password"
+            autoComplete="new-password"
+            placeholder="Confirm password"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            disabled={isSubmitting}
+            error={fieldErrors.confirmPassword}
           />
         </div>
 
@@ -197,8 +263,6 @@ export function UsersForm({
           </select>
         </div>
       </div>
-
-      {formError && <p style={{ color: "#d97b7b", fontSize: "13px" }}>{formError}</p>}
 
       <div className={styles.actions}>
         <Button type="submit" isLoading={isSubmitting}>

@@ -8,7 +8,7 @@ import styles from "./DrinksForm.module.css";
 interface DrinksFormProps {
   editingItem: Drink | null;
   categories: Category[];
-  onSubmit: (data: DrinkInput) => Promise<void>;
+  onSubmit: (data: DrinkInput) => Promise<boolean>;
   onCancel: () => void;
   isSubmitting: boolean;
 }
@@ -72,14 +72,14 @@ export function DrinksForm({
     }
 
     setErrors({});
-    await onSubmit({
+    const success = await onSubmit({
       name: trimmedName,
       price: parsedPrice,
       stock: parsedStock,
       categoryId: parsedCategoryId,
     });
 
-    if (!editingItem) {
+    if (success && !editingItem) {
       setName("");
       setPrice("");
       setStock("");

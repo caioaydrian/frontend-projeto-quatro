@@ -111,6 +111,36 @@
   margin-top: 2px;
 }
 
+.passwordStrength {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+.strengthText {
+  color: var(--muted);
+}
+
+.strengthValue {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.strengthWeak {
+  color: #f87171;
+}
+
+.strengthMedium {
+  color: #fbbf24;
+}
+
+.strengthStrong {
+  color: #34d399;
+}
+
 .footerLinks {
   margin-top: 24px;
   text-align: center;

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { AdminTitle } from "../../components/AdminTitle";
 import { AdminCard } from "../../components/AdminCard";
+import { Pagination } from "../../components/Pagination";
 import { useAuth } from "../../contexts/useAuth";
 import type { User } from "../../types/user";
 import {
@@ -23,13 +24,19 @@ export function Users() {
   const [message, setMessage] = useState("");
   const [editingItem, setEditingItem] = useState<User | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [total, setTotal] = useState(0);
 
-  async function loadUsers() {
+  async function loadUsers(currentPage: number) {
     try {
       setLoading(true);
       setError("");
-      const data = await listUsers();
-      setItems(data);
+      const response = await listUsers(currentPage, 10);
+      setItems(response.data || []);
+      setPage(response.page || 1);
+      setTotalPages(response.totalPages || 1);
+      setTotal(response.total || 0);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load users.");
     } finally {
@@ -38,10 +45,10 @@ export function Users() {
   }
 
   useEffect(() => {
-    loadUsers();
-  }, []);
+    loadUsers(page);
+  }, [page]);
 
-  async function handleCreate(data: CreateUserInput) {
+  async function handleCreate(data: CreateUserInput): Promise<boolean> {
     try {
       setIsSubmitting(true);
       setError("");
@@ -49,16 +56,22 @@ export function Users() {
       const response = await createUser(data);
       setMessage(response.message || "User created successfully.");
       setEditingItem(null);
-      await loadUsers();
+      if (page === 1) {
+        await loadUsers(1);
+      } else {
+        setPage(1);
+      }
+      return true;
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to create user.");
+      return false;
     } finally {
       setIsSubmitting(false);
     }
   }
 
-  async function handleUpdate(data: UpdateUserInput) {
-    if (!editingItem) return;
+  async function handleUpdate(data: UpdateUserInput): Promise<boolean> {
+    if (!editingItem) return false;
     try {
       setIsSubmitting(true);
       setError("");
@@ -66,19 +79,21 @@ export function Users() {
       const response = await updateUser(editingItem.id, data);
       setMessage(response.message || "User updated successfully.");
       setEditingItem(null);
-      await loadUsers();
+      await loadUsers(page);
+      return true;
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to update user.");
+      return false;
     } finally {
       setIsSubmitting(false);
     }
   }
 
-  async function handleSubmit(data: CreateUserInput | UpdateUserInput) {
+  async function handleSubmit(data: CreateUserInput | UpdateUserInput): Promise<boolean> {
     if (editingItem) {
-      await handleUpdate(data as UpdateUserInput);
+      return await handleUpdate(data as UpdateUserInput);
     } else {
-      await handleCreate(data as CreateUserInput);
+      return await handleCreate(data as CreateUserInput);
     }
   }
 
@@ -109,7 +124,12 @@ export function Users() {
         setEditingItem(null);
       }
 
-      await loadUsers();
+      const nextPage = items.length === 1 && page > 1 ? page - 1 : page;
+      if (nextPage !== page) {
+        setPage(nextPage);
+      } else {
+        await loadUsers(page);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to delete user.");
     } finally {
@@ -144,13 +164,21 @@ export function Users() {
         ) : items.length === 0 ? (
           <p className={styles.stateText}>No users found.</p>
         ) : (
-          <UsersList
-            items={items}
-            currentUserId={currentUser?.id}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-            disabled={isSubmitting}
-          />
+          <>
+            <UsersList
+              items={items}
+              currentUserId={currentUser?.id}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+              disabled={isSubmitting}
+            />
+            <Pagination
+              currentPage={page}
+              totalPages={totalPages}
+              totalItems={total}
+              onPageChange={setPage}
+            />
+          </>
         )}
       </AdminCard>
     </>

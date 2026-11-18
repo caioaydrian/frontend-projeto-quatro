@@ -1,4 +1,4 @@
-import { apiFetch } from "../utils/api";
+import { apiFetch, type PaginatedResponse } from "../utils/api";
 import type { User } from "../types/user";
 
 export interface CreateUserInput {
@@ -11,6 +11,7 @@ export interface CreateUserInput {
 
 export interface UpdateUserInput {
   name: string;
+  email: string;
   cpf: string;
   password: string;
   role?: string;
@@ -21,8 +22,11 @@ interface UserMessageResponse {
   user: User;
 }
 
-export async function listUsers(): Promise<User[]> {
-  return apiFetch<User[]>("/users");
+export async function listUsers(
+  page = 1,
+  limit = 10
+): Promise<PaginatedResponse<User>> {
+  return apiFetch<PaginatedResponse<User>>(`/users?page=${page}&limit=${limit}`);
 }
 
 export async function getUserById(id: number): Promise<User> {

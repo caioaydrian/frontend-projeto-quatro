@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { validateEmail } from "../../utils/validation";
 import { useAuth } from "../../contexts/useAuth";
+import { getUserFromToken } from "../../utils/auth";
 import { apiFetch } from "../../utils/api";
 import styles from "./Login.module.css";
 import { Button, Input } from "../../components";
@@ -18,7 +19,7 @@ interface FieldErrors {
 }
 
 export function Login() {
-  const { isAuthenticated, login } = useAuth();
+  const { isAuthenticated, user, login } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const state = (location.state as LocationState) || {};
@@ -31,7 +32,7 @@ export function Login() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (isAuthenticated) {
-    return <Navigate to="/admin" replace />;
+    return <Navigate to={user?.role === "admin" ? "/admin" : "/"} replace />;
   }
 
   const validateForm = (): boolean => {
@@ -77,8 +78,13 @@ export function Login() {
         return;
       }
 
+      const loggedUser = getUserFromToken(data.token);
       login(data.token);
-      navigate("/admin", { replace: true });
+      if (loggedUser?.role === "admin") {
+        navigate("/admin", { replace: true });
+      } else {
+        navigate("/", { replace: true });
+      }
     } catch (err) {
       console.error("Login request error:", err);
       const msg = err instanceof Error ? err.message : "Unable to sign in right now.";
@@ -137,7 +143,6 @@ export function Login() {
               }}
               disabled={isSubmitting}
             />
-            {fieldErrors.email && <span className={styles.fieldError}>{fieldErrors.email}</span>}
           </div>
 
           <div className={styles.fieldGroup}>
@@ -160,9 +165,6 @@ export function Login() {
               }}
               disabled={isSubmitting}
             />
-            {fieldErrors.password && (
-              <span className={styles.fieldError}>{fieldErrors.password}</span>
-            )}
           </div>
 
           <Button type="submit" disabled={isSubmitting}>

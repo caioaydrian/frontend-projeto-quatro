@@ -1,13 +1,13 @@
 import { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import styles from "./AdminUserMenu.module.css";
+import { Link, useNavigate } from "react-router-dom";
+import styles from "./UserMenu.module.css";
 import { useAuth } from "../../contexts/useAuth";
 
-interface AdminUserMenuProps {
+export interface UserMenuProps {
   onAction?: () => void;
 }
 
-export function AdminUserMenu({ onAction }: AdminUserMenuProps) {
+export function UserMenu({ onAction }: UserMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const { user, logout } = useAuth();
@@ -48,6 +48,7 @@ export function AdminUserMenu({ onAction }: AdminUserMenuProps) {
   };
 
   const userInitial = user.name ? user.name.charAt(0).toUpperCase() : "U";
+  const isAdmin = user.role === "admin";
 
   return (
     <div className={styles.container} ref={containerRef}>
@@ -82,8 +83,43 @@ export function AdminUserMenu({ onAction }: AdminUserMenuProps) {
           <div className={styles.dropdownHeader}>
             <div className={styles.dropdownUserName}>{user.name}</div>
             <div className={styles.dropdownUserEmail}>{user.email}</div>
+            {isAdmin && <span className={styles.roleBadge}>Admin</span>}
           </div>
+
           <div className={styles.dropdownDivider} />
+
+          {isAdmin && (
+            <>
+              <Link
+                to="/admin"
+                className={styles.menuItem}
+                role="menuitem"
+                onClick={() => {
+                  setIsOpen(false);
+                  onAction?.();
+                }}
+              >
+                <svg
+                  className={styles.menuIcon}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <rect x="3" y="3" width="7" height="7" />
+                  <rect x="14" y="3" width="7" height="7" />
+                  <rect x="14" y="14" width="7" height="7" />
+                  <rect x="3" y="14" width="7" height="7" />
+                </svg>
+                Admin Area
+              </Link>
+              <div className={styles.dropdownDivider} />
+            </>
+          )}
+
           <button
             type="button"
             className={styles.signOutBtn}
@@ -112,4 +148,4 @@ export function AdminUserMenu({ onAction }: AdminUserMenuProps) {
   );
 }
 
-export default AdminUserMenu;
+export default UserMenu;

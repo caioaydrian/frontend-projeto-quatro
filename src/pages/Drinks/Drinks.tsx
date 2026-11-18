@@ -61,7 +61,7 @@ export function Drinks() {
     loadDrinks(page);
   }, [page]);
 
-  async function handleCreate(data: DrinkInput) {
+  async function handleCreate(data: DrinkInput): Promise<boolean> {
     try {
       setIsSubmitting(true);
       setError("");
@@ -74,15 +74,17 @@ export function Drinks() {
       } else {
         setPage(1);
       }
+      return true;
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to create drink.");
+      return false;
     } finally {
       setIsSubmitting(false);
     }
   }
 
-  async function handleUpdate(data: DrinkInput) {
-    if (!editingItem) return;
+  async function handleUpdate(data: DrinkInput): Promise<boolean> {
+    if (!editingItem) return false;
     try {
       setIsSubmitting(true);
       setError("");
@@ -91,18 +93,20 @@ export function Drinks() {
       setMessage(response.message || "Drink updated successfully.");
       setEditingItem(null);
       await loadDrinks(page);
+      return true;
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to update drink.");
+      return false;
     } finally {
       setIsSubmitting(false);
     }
   }
 
-  async function handleSubmit(data: DrinkInput) {
+  async function handleSubmit(data: DrinkInput): Promise<boolean> {
     if (editingItem) {
-      await handleUpdate(data);
+      return await handleUpdate(data);
     } else {
-      await handleCreate(data);
+      return await handleCreate(data);
     }
   }
 
