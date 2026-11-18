@@ -1,7 +1,13 @@
 import { useEffect, useState, type FormEvent, type ChangeEvent } from "react";
 import { Input } from "../../../components/Input";
 import { Button } from "../../../components/Button";
-import { cleanCPF, formatCPF, validateEmail, validatePasswordLevel } from "../../../utils/validation";
+import {
+  cleanCPF,
+  formatCPF,
+  validateCPF,
+  validateEmail,
+  validatePasswordLevel,
+} from "../../../utils/validation";
 import type { User } from "../../../types/user";
 import type { CreateUserInput, UpdateUserInput } from "../../../services/users";
 import styles from "./UsersForm.module.css";
@@ -87,8 +93,8 @@ export function UsersForm({ editingItem, onSubmit, onCancel, isSubmitting }: Use
 
     if (!rawCpf) {
       errors.cpf = "CPF is required.";
-    } else if (rawCpf.length !== 11) {
-      errors.cpf = "CPF must contain 11 digits.";
+    } else if (!validateCPF(formData.cpf)) {
+      errors.cpf = "Please enter a valid CPF.";
     }
 
     const passwordCheck = validatePasswordLevel(formData.password);
@@ -215,8 +221,8 @@ export function UsersForm({ editingItem, onSubmit, onCancel, isSubmitting }: Use
                     passwordStrength.level === "Strong"
                       ? "strengthStrong"
                       : passwordStrength.level === "Medium"
-                      ? "strengthMedium"
-                      : "strengthWeak"
+                        ? "strengthMedium"
+                        : "strengthWeak"
                   ]
                 }`}
               >

@@ -1,7 +1,13 @@
 import { useState, type FormEvent, type ChangeEvent } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/useAuth";
-import { cleanCPF, formatCPF, validateEmail, validatePasswordLevel } from "../../utils/validation";
+import {
+  cleanCPF,
+  formatCPF,
+  validateCPF,
+  validateEmail,
+  validatePasswordLevel,
+} from "../../utils/validation";
 import { apiFetch } from "../../utils/api";
 import styles from "./Register.module.css";
 import { Button, Input } from "../../components";
@@ -67,8 +73,8 @@ export function Register() {
     const cpfDigits = cleanCPF(formData.cpf);
     if (!cpfDigits) {
       errors.cpf = "CPF is required.";
-    } else if (cpfDigits.length !== 11) {
-      errors.cpf = "CPF must contain 11 digits.";
+    } else if (!validateCPF(formData.cpf)) {
+      errors.cpf = "Please enter a valid CPF.";
     }
 
     const passwordCheck = validatePasswordLevel(formData.password);
@@ -242,8 +248,8 @@ export function Register() {
                       passwordStrength.level === "Strong"
                         ? "strengthStrong"
                         : passwordStrength.level === "Medium"
-                        ? "strengthMedium"
-                        : "strengthWeak"
+                          ? "strengthMedium"
+                          : "strengthWeak"
                     ]
                   }`}
                 >

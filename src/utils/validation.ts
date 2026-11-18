@@ -9,6 +9,32 @@ export function cleanCPF(cpf: string): string {
   return cpf.replace(/\D/g, "");
 }
 
+export function validateCPF(cpf: string): boolean {
+  const digits = cleanCPF(cpf);
+  if (digits.length !== 11) return false;
+
+  // Rejeita sequências com todos os dígitos iguais (ex: 111.111.111-11)
+  if (/^(\d)\1{10}$/.test(digits)) return false;
+
+  let sum = 0;
+  for (let i = 0; i < 9; i++) {
+    sum += Number(digits.charAt(i)) * (10 - i);
+  }
+  let firstDigit = (sum * 10) % 11;
+  if (firstDigit === 10 || firstDigit === 11) firstDigit = 0;
+  if (firstDigit !== Number(digits.charAt(9))) return false;
+
+  sum = 0;
+  for (let i = 0; i < 10; i++) {
+    sum += Number(digits.charAt(i)) * (11 - i);
+  }
+  let secondDigit = (sum * 10) % 11;
+  if (secondDigit === 10 || secondDigit === 11) secondDigit = 0;
+  if (secondDigit !== Number(digits.charAt(10))) return false;
+
+  return true;
+}
+
 export interface PasswordLevelResult {
   isValid: boolean;
   level: "Weak" | "Medium" | "Strong";
