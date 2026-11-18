@@ -8,7 +8,7 @@ import styles from "./UsersForm.module.css";
 
 interface UsersFormProps {
   editingItem: User | null;
-  onSubmit: (data: CreateUserInput | UpdateUserInput) => Promise<void>;
+  onSubmit: (data: CreateUserInput | UpdateUserInput) => Promise<boolean>;
   onCancel: () => void;
   isSubmitting: boolean;
 }
@@ -107,23 +107,23 @@ export function UsersForm({
         role: formData.role,
       });
     } else {
-      await onSubmit({
+      const success = await onSubmit({
         name: trimmedName,
         email: formData.email.trim().toLowerCase(),
         cpf: rawCpf,
         password: formData.password,
         role: formData.role,
       });
-    }
 
-    if (!editingItem) {
-      setFormData({
-        name: "",
-        email: "",
-        cpf: "",
-        password: "",
-        role: "client",
-      });
+      if (success) {
+        setFormData({
+          name: "",
+          email: "",
+          cpf: "",
+          password: "",
+          role: "client",
+        });
+      }
     }
   }
 

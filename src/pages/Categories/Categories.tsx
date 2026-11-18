@@ -45,7 +45,7 @@ export function Categories() {
     loadCategories(page);
   }, [page]);
 
-  async function handleCreate(data: CategoryInput) {
+  async function handleCreate(data: CategoryInput): Promise<boolean> {
     try {
       setIsSubmitting(true);
       setError("");
@@ -58,15 +58,17 @@ export function Categories() {
       } else {
         setPage(1);
       }
+      return true;
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to create category.");
+      return false;
     } finally {
       setIsSubmitting(false);
     }
   }
 
-  async function handleUpdate(data: CategoryInput) {
-    if (!editingItem) return;
+  async function handleUpdate(data: CategoryInput): Promise<boolean> {
+    if (!editingItem) return false;
     try {
       setIsSubmitting(true);
       setError("");
@@ -75,18 +77,20 @@ export function Categories() {
       setMessage(response.message || "Category updated successfully.");
       setEditingItem(null);
       await loadCategories(page);
+      return true;
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to update category.");
+      return false;
     } finally {
       setIsSubmitting(false);
     }
   }
 
-  async function handleSubmit(data: CategoryInput) {
+  async function handleSubmit(data: CategoryInput): Promise<boolean> {
     if (editingItem) {
-      await handleUpdate(data);
+      return await handleUpdate(data);
     } else {
-      await handleCreate(data);
+      return await handleCreate(data);
     }
   }
 

@@ -7,7 +7,7 @@ import styles from "./CategoriesForm.module.css";
 
 interface CategoriesFormProps {
   editingItem: Category | null;
-  onSubmit: (data: CategoryInput) => Promise<void>;
+  onSubmit: (data: CategoryInput) => Promise<boolean>;
   onCancel: () => void;
   isSubmitting: boolean;
 }
@@ -36,9 +36,9 @@ export function CategoriesForm({
     }
 
     setFormError("");
-    await onSubmit({ name: trimmedName });
+    const success = await onSubmit({ name: trimmedName });
 
-    if (!editingItem) {
+    if (success && !editingItem) {
       setName("");
     }
   }

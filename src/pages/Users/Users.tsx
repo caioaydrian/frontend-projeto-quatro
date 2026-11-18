@@ -48,7 +48,7 @@ export function Users() {
     loadUsers(page);
   }, [page]);
 
-  async function handleCreate(data: CreateUserInput) {
+  async function handleCreate(data: CreateUserInput): Promise<boolean> {
     try {
       setIsSubmitting(true);
       setError("");
@@ -61,15 +61,17 @@ export function Users() {
       } else {
         setPage(1);
       }
+      return true;
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to create user.");
+      return false;
     } finally {
       setIsSubmitting(false);
     }
   }
 
-  async function handleUpdate(data: UpdateUserInput) {
-    if (!editingItem) return;
+  async function handleUpdate(data: UpdateUserInput): Promise<boolean> {
+    if (!editingItem) return false;
     try {
       setIsSubmitting(true);
       setError("");
@@ -78,18 +80,20 @@ export function Users() {
       setMessage(response.message || "User updated successfully.");
       setEditingItem(null);
       await loadUsers(page);
+      return true;
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to update user.");
+      return false;
     } finally {
       setIsSubmitting(false);
     }
   }
 
-  async function handleSubmit(data: CreateUserInput | UpdateUserInput) {
+  async function handleSubmit(data: CreateUserInput | UpdateUserInput): Promise<boolean> {
     if (editingItem) {
-      await handleUpdate(data as UpdateUserInput);
+      return await handleUpdate(data as UpdateUserInput);
     } else {
-      await handleCreate(data as CreateUserInput);
+      return await handleCreate(data as CreateUserInput);
     }
   }
 
