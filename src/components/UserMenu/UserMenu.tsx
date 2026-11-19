@@ -88,37 +88,61 @@ export function UserMenu({ onAction }: UserMenuProps) {
 
           <div className={styles.dropdownDivider} />
 
+          <Link
+            to={isAdmin ? "/admin/profile" : "/profile"}
+            className={styles.menuItem}
+            role="menuitem"
+            onClick={() => {
+              setIsOpen(false);
+              onAction?.();
+            }}
+          >
+            <svg
+              className={styles.menuIcon}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+            Edit Profile
+          </Link>
+
           {isAdmin && (
-            <>
-              <Link
-                to="/admin"
-                className={styles.menuItem}
-                role="menuitem"
-                onClick={() => {
-                  setIsOpen(false);
-                  onAction?.();
-                }}
+            <Link
+              to="/admin"
+              className={styles.menuItem}
+              role="menuitem"
+              onClick={() => {
+                setIsOpen(false);
+                onAction?.();
+              }}
+            >
+              <svg
+                className={styles.menuIcon}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
               >
-                <svg
-                  className={styles.menuIcon}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                >
-                  <rect x="3" y="3" width="7" height="7" />
-                  <rect x="14" y="3" width="7" height="7" />
-                  <rect x="14" y="14" width="7" height="7" />
-                  <rect x="3" y="14" width="7" height="7" />
-                </svg>
-                Admin Area
-              </Link>
-              <div className={styles.dropdownDivider} />
-            </>
+                <rect x="3" y="3" width="7" height="7" />
+                <rect x="14" y="3" width="7" height="7" />
+                <rect x="14" y="14" width="7" height="7" />
+                <rect x="3" y="14" width="7" height="7" />
+              </svg>
+              Admin Area
+            </Link>
           )}
+
+          <div className={styles.dropdownDivider} />
 
           <button
             type="button"

@@ -5,3 +5,4 @@ export * from "./Dashboard";
 export * from "./Users";
 export * from "./Drinks";
 export * from "./Categories";
+export * from "./Profile";
