@@ -7,3 +7,4 @@ export * from "./Drinks";
 export * from "./Categories";
 export * from "./Profile";
 export * from "./Menu";
+export * from "./Reviews";

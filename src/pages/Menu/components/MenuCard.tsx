@@ -1,6 +1,7 @@
 import type { Drink } from "../../../types/drink";
 import { useCart } from "../../../contexts/useCart";
 import { DEFAULT_DRINK_IMAGE } from "../../../utils/constants";
+import { DrinkRating } from "../../../components/DrinkRating";
 import styles from "./MenuCard.module.css";
 
 interface MenuCardProps {
@@ -49,6 +50,8 @@ export function MenuCard({ drink }: MenuCardProps) {
             {isOutOfStock ? "Out of stock" : `${drink.stock} in stock`}
           </p>
         </div>
+
+        <DrinkRating drinkId={drink.id} />
 
         <div className={styles.footer}>
           <span className={styles.price}>${Number(drink.price).toFixed(2)}</span>

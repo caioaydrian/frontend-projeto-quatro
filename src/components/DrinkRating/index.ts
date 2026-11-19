@@ -1,0 +1,1 @@
+export { DrinkRating } from "./DrinkRating";

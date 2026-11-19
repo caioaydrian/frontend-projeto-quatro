@@ -8,6 +8,7 @@ const navItems = [
   { to: "/admin/users", label: "Users", end: false },
   { to: "/admin/drinks", label: "Drinks", end: false },
   { to: "/admin/categories", label: "Categories", end: false },
+  { to: "/admin/reviews", label: "Reviews", end: false },
 ];
 
 export function AdminHeader() {
