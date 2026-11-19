@@ -2,6 +2,18 @@ import { getToken, clearToken } from "./auth";
 
 export const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
+export class ApiError extends Error {
+  status: number;
+  data: unknown;
+
+  constructor(status: number, message: string, data?: unknown) {
+    super(message);
+    this.name = "ApiError";
+    this.status = status;
+    this.data = data;
+  }
+}
+
 export interface PaginatedResponse<T> {
   data: T[];
   total: number;
@@ -59,7 +71,7 @@ export async function apiFetch<T>(endpoint: string, options: ApiFetchOptions = {
     const errorData = await response.json().catch(() => null);
     const errorMessage =
       errorData?.error || errorData?.message || `Request failed with status ${response.status}`;
-    throw new Error(errorMessage);
+    throw new ApiError(response.status, errorMessage, errorData);
   }
 
   if (response.status === 204) {

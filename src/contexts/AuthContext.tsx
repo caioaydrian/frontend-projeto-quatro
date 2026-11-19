@@ -9,6 +9,7 @@ import {
 } from "../utils/auth";
 import { AuthContext } from "./useAuth";
 import { getUserById } from "../services/users";
+import { ApiError } from "../utils/api";
 import type { User } from "../types/user";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -28,6 +29,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       saveStoredUser(fullUser);
       return fullUser;
     } catch (err) {
+      if (err instanceof ApiError && (err.status === 404 || err.status === 401)) {
+        clearToken();
+        setToken(null);
+        setUser(null);
+        return null;
+      }
       console.error("Failed to sync current user profile:", err);
       return null;
     }
@@ -62,8 +69,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setUser(fullUser);
           saveStoredUser(fullUser);
         }
-      } catch {
-        if (isCurrent) {
+      } catch (err) {
+        if (err instanceof ApiError && (err.status === 404 || err.status === 401)) {
+          if (isCurrent) {
+            clearToken();
+            setToken(null);
+            setUser(null);
+          }
+        } else if (isCurrent) {
           setUser((prev) => {
             const fallback = prev || getStoredUser() || tokenUser;
             saveStoredUser(fallback);
