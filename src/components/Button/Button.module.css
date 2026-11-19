@@ -22,7 +22,6 @@
   cursor: not-allowed;
 }
 
-/* Tamanhos */
 .sm {
   min-height: 32px;
   padding: 0 12px;
@@ -35,7 +34,6 @@
   font-size: 12px;
 }
 
-/* Variantes */
 .primary {
   background: var(--accent);
   border: 1px solid var(--accent);

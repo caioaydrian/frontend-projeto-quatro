@@ -1,7 +1,8 @@
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
-import { Home, Register, Login, Dashboard, Users, Drinks, Categories, Profile } from "./pages";
+import { Home, Register, Login, Dashboard, Users, Drinks, Categories, Profile, Menu } from "./pages";
 import { MainLayout, AdminLayout, ProtectedLayout, AuthRequiredLayout } from "./layouts";
 import { AuthProvider } from "./contexts/AuthContext";
+import { CartProvider } from "./contexts/CartContext";
 
 const router = createBrowserRouter([
   {
@@ -9,6 +10,7 @@ const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       { index: true, element: <Home /> },
+      { path: "menu", element: <Menu /> },
       { path: "register", element: <Register /> },
       { path: "login", element: <Login /> },
       {
@@ -39,7 +41,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <AuthProvider>
-      <RouterProvider router={router} />
+      <CartProvider>
+        <RouterProvider router={router} />
+      </CartProvider>
     </AuthProvider>
   );
 }

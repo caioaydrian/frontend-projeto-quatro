@@ -2,11 +2,13 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./Header.module.css";
 import { useAuth } from "../../contexts/useAuth";
+import { useCart } from "../../contexts/useCart";
 import { UserMenu } from "../UserMenu";
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { isAuthenticated } = useAuth();
+  const { totalItems } = useCart();
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -47,8 +49,19 @@ export function Header() {
         <NavLink to="/#story" onClick={closeMenu}>
           Our Story
         </NavLink>
-        <NavLink to="/#menu" onClick={closeMenu}>
-          The Menu
+        <NavLink
+          to="/menu"
+          className={({ isActive }) =>
+            `${styles.menuNavLink} ${isActive ? styles.activeLink : ""}`
+          }
+          onClick={closeMenu}
+        >
+          <span>The Menu</span>
+          {totalItems > 0 && (
+            <span className={styles.bagBadge} title={`${totalItems} items in bag`}>
+              {totalItems}
+            </span>
+          )}
         </NavLink>
         <NavLink to="/#visit" onClick={closeMenu}>
           Find Us

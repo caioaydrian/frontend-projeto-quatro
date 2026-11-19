@@ -1,32 +1,17 @@
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { listDrinks } from "../../services/drinks";
+import type { Drink } from "../../types/drink";
 import styles from "./Home.module.css";
 
-const drinks = [
-  {
-    name: "Velvet Mocha",
-    description: "Dark chocolate, double espresso, and a cloud of steamed milk.",
-    price: "$6.50",
-    image: "https://www.coffeesphere.com/wp-content/uploads/2021/01/red-velvet-mocha-recipe.jpg",
-    label: "BEST SELLER",
-  },
-  {
-    name: "Midnight Pour Over",
-    description: "Slow-brewed single origin with notes of cocoa and plum.",
-    price: "$5.00",
-    image:
-      "https://images.unsplash.com/photo-1497515114629-f71d768fd07c?auto=format&fit=crop&w=900&q=85",
-    label: "SLOW & STEADY",
-  },
-  {
-    name: "Cinnamon Dusk",
-    description: "A smooth oat latte finished with warm cinnamon and honey.",
-    price: "$6.00",
-    image:
-      "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=900&q=85",
-    label: "A LITTLE COMFORT",
-  },
-];
-
 export function Home() {
+  const [drinks, setDrinks] = useState<Drink[]>([]);
+
+  useEffect(() => {
+    listDrinks(1, 3)
+      .then((res) => setDrinks(res.data || []))
+      .catch((err) => console.error("Failed to load favorite drinks:", err));
+  }, []);
   return (
     <div>
       <section className={styles.hero} id="home">
@@ -44,9 +29,9 @@ export function Home() {
             the noise.
           </p>
           <div className={styles.heroActions}>
-            <a className={styles.buttonPrimary} href="#menu">
+            <Link className={styles.buttonPrimary} to="/menu">
               Discover our coffee <span aria-hidden="true">↗</span>
-            </a>
+            </Link>
             <a className={styles.textLink} href="#story">
               A little about us <span aria-hidden="true">↓</span>
             </a>
@@ -120,24 +105,23 @@ export function Home() {
               Made for your <em>moment.</em>
             </h2>
           </div>
-          <a className={`${styles.textLink} ${styles.menuLink}`} href="#visit">
+          <Link className={`${styles.textLink} ${styles.menuLink}`} to="/menu">
             See you at the counter <span aria-hidden="true">↗</span>
-          </a>
+          </Link>
         </div>
         <div className={styles.drinkGrid}>
           {drinks.map((drink, index) => (
-            <article className={styles.drinkCard} key={drink.name}>
+            <article className={styles.drinkCard} key={drink.id}>
               <div className={styles.drinkImageWrap}>
-                <img src={drink.image} alt={drink.name} loading="lazy" />
                 <span className={styles.drinkNumber}>0{index + 1}</span>
               </div>
               <div className={styles.drinkDetails}>
                 <div className={styles.drinkMeta}>
-                  <span>{drink.label}</span>
-                  <span>{drink.price}</span>
+                  <span>{drink.category?.name || "SPECIALTY"}</span>
+                  <span>${Number(drink.price).toFixed(2)}</span>
                 </div>
                 <h3>{drink.name}</h3>
-                <p>{drink.description}</p>
+                <p>{drink.stock} in stock</p>
               </div>
             </article>
           ))}

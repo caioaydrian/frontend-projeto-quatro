@@ -45,7 +45,6 @@ export function Drinks() {
 
   async function loadAllCategories() {
     try {
-      // Fetch categories for the select input
       const response = await listCategories(1, 100);
       setCategories(response.data);
     } catch (err) {

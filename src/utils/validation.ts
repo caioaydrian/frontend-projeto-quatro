@@ -13,7 +13,6 @@ export function validateCPF(cpf: string): boolean {
   const digits = cleanCPF(cpf);
   if (digits.length !== 11) return false;
 
-  // Rejeita sequências com todos os dígitos iguais (ex: 111.111.111-11)
   if (/^(\d)\1{10}$/.test(digits)) return false;
 
   let sum = 0;

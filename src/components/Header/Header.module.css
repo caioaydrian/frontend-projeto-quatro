@@ -61,6 +61,32 @@
   color: var(--accent);
 }
 
+.menuNavLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.activeLink {
+  color: var(--accent) !important;
+  font-weight: 600;
+}
+
+.bagBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 19px;
+  height: 19px;
+  padding: 0 5px;
+  background: var(--accent);
+  color: #181714;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 999px;
+  line-height: 1;
+}
+
 .navCta {
   display: inline-flex;
   min-height: 40px;
