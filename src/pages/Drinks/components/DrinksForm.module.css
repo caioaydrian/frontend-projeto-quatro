@@ -71,3 +71,18 @@
   gap: 8px;
   align-items: center;
 }
+
+.imageUrlGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  grid-column: 1 / -1;
+}
+
+.imagePreview {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border: 1px solid rgb(234 228 219 / 15%);
+  background: #25221c;
+}

@@ -23,7 +23,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   }, [items]);
 
-  const addItem = (drink: { id: number; name: string; price: number; categoryName?: string }) => {
+  const addItem = (drink: {
+    id: number;
+    name: string;
+    price: number;
+    categoryName?: string;
+    imageUrl?: string | null;
+  }) => {
     setItems((prev) => {
       const existing = prev.find((item) => item.id === drink.id);
       if (existing) {
@@ -39,6 +45,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
           price: Number(drink.price),
           quantity: 1,
           categoryName: drink.categoryName,
+          imageUrl: drink.imageUrl,
         },
       ];
     });

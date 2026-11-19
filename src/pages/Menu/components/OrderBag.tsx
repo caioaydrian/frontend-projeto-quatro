@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useCart } from "../../../contexts/useCart";
+import { DEFAULT_DRINK_IMAGE } from "../../../utils/constants";
 import styles from "./OrderBag.module.css";
 
 export function OrderBag() {
@@ -60,46 +61,54 @@ export function OrderBag() {
           <div className={styles.itemsContainer}>
             {items.map((item) => (
               <div key={item.id} className={styles.itemRow}>
-                <div className={styles.itemTop}>
-                  <span className={styles.itemName}>{item.name}</span>
-                  <button
-                    type="button"
-                    className={styles.removeBtn}
-                    onClick={() => removeItem(item.id)}
-                    aria-label={`Remove ${item.name}`}
-                  >
-                    ×
-                  </button>
-                </div>
-
-                {item.categoryName && (
-                  <span className={styles.itemCategory}>{item.categoryName}</span>
-                )}
-
-                <div className={styles.itemBottom}>
-                  <div className={styles.qtyControls}>
+                <img
+                  src={item.imageUrl || DEFAULT_DRINK_IMAGE}
+                  alt={item.name}
+                  className={styles.itemThumb}
+                  loading="lazy"
+                />
+                <div className={styles.itemContent}>
+                  <div className={styles.itemTop}>
+                    <span className={styles.itemName}>{item.name}</span>
                     <button
                       type="button"
-                      className={styles.qtyBtn}
-                      onClick={() => updateQuantity(item.id, -1)}
-                      aria-label="Decrease quantity"
+                      className={styles.removeBtn}
+                      onClick={() => removeItem(item.id)}
+                      aria-label={`Remove ${item.name}`}
                     >
-                      −
-                    </button>
-                    <span className={styles.qtyValue}>{item.quantity}</span>
-                    <button
-                      type="button"
-                      className={styles.qtyBtn}
-                      onClick={() => updateQuantity(item.id, 1)}
-                      aria-label="Increase quantity"
-                    >
-                      +
+                      ×
                     </button>
                   </div>
 
-                  <span className={styles.itemPrice}>
-                    ${(item.price * item.quantity).toFixed(2)}
-                  </span>
+                  {item.categoryName && (
+                    <span className={styles.itemCategory}>{item.categoryName}</span>
+                  )}
+
+                  <div className={styles.itemBottom}>
+                    <div className={styles.qtyControls}>
+                      <button
+                        type="button"
+                        className={styles.qtyBtn}
+                        onClick={() => updateQuantity(item.id, -1)}
+                        aria-label="Decrease quantity"
+                      >
+                        −
+                      </button>
+                      <span className={styles.qtyValue}>{item.quantity}</span>
+                      <button
+                        type="button"
+                        className={styles.qtyBtn}
+                        onClick={() => updateQuantity(item.id, 1)}
+                        aria-label="Increase quantity"
+                      >
+                        +
+                      </button>
+                    </div>
+
+                    <span className={styles.itemPrice}>
+                      ${(item.price * item.quantity).toFixed(2)}
+                    </span>
+                  </div>
                 </div>
               </div>
             ))}

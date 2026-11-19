@@ -6,11 +6,18 @@ export interface CartItem {
   price: number;
   quantity: number;
   categoryName?: string;
+  imageUrl?: string | null;
 }
 
 export interface CartContextType {
   items: CartItem[];
-  addItem: (drink: { id: number; name: string; price: number; categoryName?: string }) => void;
+  addItem: (drink: {
+    id: number;
+    name: string;
+    price: number;
+    categoryName?: string;
+    imageUrl?: string | null;
+  }) => void;
   removeItem: (id: number) => void;
   updateQuantity: (id: number, delta: number) => void;
   clearCart: () => void;
