@@ -76,10 +76,27 @@
 
 .itemRow {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  gap: 12px;
+  align-items: center;
   padding-bottom: 14px;
   border-bottom: 1px solid rgb(234 228 219 / 8%);
+}
+
+.itemThumb {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid rgb(234 228 219 / 10%);
+  background: #25221c;
+}
+
+.itemContent {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .itemTop {

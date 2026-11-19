@@ -24,6 +24,7 @@ export function DrinksForm({
   const [price, setPrice] = useState("");
   const [stock, setStock] = useState("");
   const [categoryId, setCategoryId] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
@@ -32,11 +33,13 @@ export function DrinksForm({
       setPrice(String(editingItem.price));
       setStock(String(editingItem.stock));
       setCategoryId(String(editingItem.categoryId));
+      setImageUrl(editingItem.imageUrl ?? "");
     } else {
       setName("");
       setPrice("");
       setStock("");
       setCategoryId("");
+      setImageUrl("");
     }
     setErrors({});
   }, [editingItem]);
@@ -77,6 +80,7 @@ export function DrinksForm({
       price: parsedPrice,
       stock: parsedStock,
       categoryId: parsedCategoryId,
+      imageUrl: imageUrl.trim() || null,
     });
 
     if (success && !editingItem) {
@@ -84,6 +88,7 @@ export function DrinksForm({
       setPrice("");
       setStock("");
       setCategoryId("");
+      setImageUrl("");
     }
   }
 
@@ -154,6 +159,26 @@ export function DrinksForm({
             <span className={styles.error} role="alert">
               {errors.categoryId}
             </span>
+          )}
+        </div>
+
+        <div className={styles.imageUrlGroup}>
+          <Input
+            label="Image URL (optional)"
+            placeholder="https://..."
+            value={imageUrl}
+            onChange={(e) => setImageUrl(e.target.value)}
+            disabled={isSubmitting}
+          />
+          {imageUrl.trim() && (
+            <img
+              src={imageUrl.trim()}
+              alt="Preview"
+              className={styles.imagePreview}
+              onError={(e) => {
+                (e.currentTarget as HTMLImageElement).style.display = "none";
+              }}
+            />
           )}
         </div>
       </div>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { listDrinks } from "../../services/drinks";
+import { DEFAULT_DRINK_IMAGE } from "../../utils/constants";
 import type { Drink } from "../../types/drink";
 import styles from "./Home.module.css";
 
@@ -113,6 +114,11 @@ export function Home() {
           {drinks.map((drink, index) => (
             <article className={styles.drinkCard} key={drink.id}>
               <div className={styles.drinkImageWrap}>
+                <img
+                  src={drink.imageUrl || DEFAULT_DRINK_IMAGE}
+                  alt={drink.name}
+                  loading="lazy"
+                />
                 <span className={styles.drinkNumber}>0{index + 1}</span>
               </div>
               <div className={styles.drinkDetails}>

@@ -7,6 +7,7 @@ export interface Drink {
   stock: number;
   categoryId: number;
   category?: Category;
+  imageUrl?: string | null;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -16,4 +17,5 @@ export interface DrinkInput {
   price: number;
   stock: number;
   categoryId: number;
+  imageUrl?: string | null;
 }
