@@ -271,6 +271,12 @@
   cursor: not-allowed;
 }
 
+.errorMessage {
+  margin: 0;
+  color: #ff7b72;
+  font-size: 12.5px;
+}
+
 .clearBtn {
   background: transparent;
   border: none;

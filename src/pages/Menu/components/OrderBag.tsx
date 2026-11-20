@@ -1,5 +1,7 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useCart } from "../../../contexts/useCart";
+import { useAuth } from "../../../contexts/useAuth";
+import { createSale } from "../../../services/sales";
 import type { CompletedOrder, OrderMode } from "../../../types/order";
 import { DEFAULT_DRINK_IMAGE } from "../../../utils/constants";
 import { OrderTicket } from "./OrderTicket";
@@ -17,25 +19,42 @@ export function OrderBag() {
     setIsBagOpen,
   } = useCart();
 
+  const { isAuthenticated } = useAuth();
   const [orderMode, setOrderMode] = useState<OrderMode>("dine-in");
   const [completedOrder, setCompletedOrder] = useState<CompletedOrder | null>(null);
-  const orderCounter = useRef(0);
+  const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleCheckout = () => {
-    if (items.length === 0) return;
+  const handleCheckout = async () => {
+    if (items.length === 0 || isSubmitting) return;
+    if (!isAuthenticated) {
+      setError("Please sign in to place an order.");
+      return;
+    }
 
-    orderCounter.current += 1;
-    setCompletedOrder({
-      number: String(orderCounter.current).padStart(3, "0"),
-      mode: orderMode,
-      items: items.map((item) => ({ ...item })),
-      total: totalPrice,
-      createdAt: new Date().toLocaleString("en-US", {
-        dateStyle: "short",
-        timeStyle: "short",
-      }),
-    });
-    clearCart();
+    setError("");
+    setIsSubmitting(true);
+    try {
+      const sale = await createSale(
+        items.map((item) => ({ drinkId: item.id, quantity: item.quantity }))
+      );
+
+      setCompletedOrder({
+        number: String(sale.id).padStart(3, "0"),
+        mode: orderMode,
+        items: items.map((item) => ({ ...item })),
+        total: totalPrice,
+        createdAt: new Date().toLocaleString("en-US", {
+          dateStyle: "short",
+          timeStyle: "short",
+        }),
+      });
+      clearCart();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to place the order.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const closeDrawer = () => setIsBagOpen(false);
@@ -180,17 +199,28 @@ export function OrderBag() {
                 <span className={styles.totalAmount}>${totalPrice.toFixed(2)}</span>
               </div>
 
+              {error && (
+                <p className={styles.errorMessage} role="alert">
+                  {error}
+                </p>
+              )}
+
               <button
                 type="button"
                 className={styles.checkoutBtn}
                 onClick={handleCheckout}
-                disabled={items.length === 0}
+                disabled={items.length === 0 || isSubmitting}
               >
-                Finalize Order
+                {isSubmitting ? "Placing Order..." : "Finalize Order"}
               </button>
 
               {items.length > 0 && (
-                <button type="button" className={styles.clearBtn} onClick={clearCart}>
+                <button
+                  type="button"
+                  className={styles.clearBtn}
+                  onClick={clearCart}
+                  disabled={isSubmitting}
+                >
                   Clear bag
                 </button>
               )}
