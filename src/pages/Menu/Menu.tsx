@@ -67,7 +67,7 @@ export function Menu() {
           The <em>Menu.</em>
         </h1>
         <p className={styles.subtitle}>
-          Browse our drinks catalog, customize your order bag, and pick up at the counter.
+          Browse our drinks catalog, customize your order bag, and choose dine in or take out.
         </p>
       </header>
 

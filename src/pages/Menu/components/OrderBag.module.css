@@ -201,13 +201,49 @@
   color: var(--accent);
 }
 
-.successMessage {
-  background: rgb(200 157 106 / 15%);
-  border: 1px solid var(--accent);
-  padding: 10px 12px;
-  font-size: 12.5px;
+.modeSelector {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.modeLegend {
+  padding: 0;
+  margin-bottom: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.modeOptions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.modeOption {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px;
+  border: 1px solid rgb(234 228 219 / 15%);
   color: var(--text);
-  line-height: 1.4;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+
+.modeOptionActive {
+  border-color: var(--accent);
+  background: rgb(200 157 106 / 12%);
+  color: var(--accent);
+}
+
+.modeOption input {
+  margin: 0;
+  accent-color: var(--accent);
+  cursor: pointer;
 }
 
 .checkoutBtn {

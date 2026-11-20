@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useCart } from "../../../contexts/useCart";
+import type { CompletedOrder, OrderMode } from "../../../types/order";
 import { DEFAULT_DRINK_IMAGE } from "../../../utils/constants";
+import { OrderTicket } from "./OrderTicket";
 import styles from "./OrderBag.module.css";
 
 export function OrderBag() {
@@ -15,10 +17,25 @@ export function OrderBag() {
     setIsBagOpen,
   } = useCart();
 
-  const [orderCompleted, setOrderCompleted] = useState(false);
+  const [orderMode, setOrderMode] = useState<OrderMode>("dine-in");
+  const [completedOrder, setCompletedOrder] = useState<CompletedOrder | null>(null);
+  const orderCounter = useRef(0);
 
   const handleCheckout = () => {
-    setOrderCompleted(true);
+    if (items.length === 0) return;
+
+    orderCounter.current += 1;
+    setCompletedOrder({
+      number: String(orderCounter.current).padStart(3, "0"),
+      mode: orderMode,
+      items: items.map((item) => ({ ...item })),
+      total: totalPrice,
+      createdAt: new Date().toLocaleString("en-US", {
+        dateStyle: "short",
+        timeStyle: "short",
+      }),
+    });
+    clearCart();
   };
 
   const closeDrawer = () => setIsBagOpen(false);
@@ -54,8 +71,12 @@ export function OrderBag() {
 
         {items.length === 0 ? (
           <div className={styles.emptyState}>
-            <strong>Your bag is empty</strong>
-            <p>Select drinks from the menu to add to your order.</p>
+            <strong>{completedOrder ? "Order placed" : "Your bag is empty"}</strong>
+            <p>
+              {completedOrder
+                ? "Your order ticket is ready below."
+                : "Select drinks from the menu to add to your order."}
+            </p>
           </div>
         ) : (
           <div className={styles.itemsContainer}>
@@ -116,37 +137,64 @@ export function OrderBag() {
         )}
 
         <footer className={styles.footer}>
-          <div className={styles.totalRow}>
-            <span>Total:</span>
-            <span className={styles.totalAmount}>${totalPrice.toFixed(2)}</span>
-          </div>
+          {completedOrder ? (
+            <OrderTicket order={completedOrder} onNewOrder={() => setCompletedOrder(null)} />
+          ) : (
+            <>
+              <fieldset className={styles.modeSelector}>
+                <legend className={styles.modeLegend}>Order type</legend>
+                <div className={styles.modeOptions}>
+                  <label
+                    className={`${styles.modeOption} ${
+                      orderMode === "dine-in" ? styles.modeOptionActive : ""
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="orderMode"
+                      value="dine-in"
+                      checked={orderMode === "dine-in"}
+                      onChange={() => setOrderMode("dine-in")}
+                    />
+                    Dine in
+                  </label>
+                  <label
+                    className={`${styles.modeOption} ${
+                      orderMode === "take-out" ? styles.modeOptionActive : ""
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="orderMode"
+                      value="take-out"
+                      checked={orderMode === "take-out"}
+                      onChange={() => setOrderMode("take-out")}
+                    />
+                    Take out
+                  </label>
+                </div>
+              </fieldset>
 
-          {orderCompleted && (
-            <div className={styles.successMessage}>
-              Order registered! Please present your order comanda at the counter.
-            </div>
-          )}
+              <div className={styles.totalRow}>
+                <span>Total:</span>
+                <span className={styles.totalAmount}>${totalPrice.toFixed(2)}</span>
+              </div>
 
-          <button
-            type="button"
-            className={styles.checkoutBtn}
-            onClick={handleCheckout}
-            disabled={items.length === 0}
-          >
-            Finalize Order
-          </button>
+              <button
+                type="button"
+                className={styles.checkoutBtn}
+                onClick={handleCheckout}
+                disabled={items.length === 0}
+              >
+                Finalize Order
+              </button>
 
-          {items.length > 0 && (
-            <button
-              type="button"
-              className={styles.clearBtn}
-              onClick={() => {
-                clearCart();
-                setOrderCompleted(false);
-              }}
-            >
-              Clear bag
-            </button>
+              {items.length > 0 && (
+                <button type="button" className={styles.clearBtn} onClick={clearCart}>
+                  Clear bag
+                </button>
+              )}
+            </>
           )}
         </footer>
       </aside>
