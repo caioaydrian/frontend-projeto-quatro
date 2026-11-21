@@ -139,7 +139,6 @@ export function Profile() {
 
       const response = await updateUser(user.id, {
         name: formData.name.trim(),
-        email: formData.email.trim(),
         cpf: rawCpf,
         password: formData.password,
         role: formData.role,

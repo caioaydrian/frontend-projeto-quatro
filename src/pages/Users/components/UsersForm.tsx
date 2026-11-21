@@ -128,7 +128,6 @@ export function UsersForm({ editingItem, onSubmit, onCancel, isSubmitting }: Use
     if (editingItem) {
       await onSubmit({
         name: trimmedName,
-        email: trimmedEmail,
         cpf: rawCpf,
         password: formData.password,
         role: formData.role,
