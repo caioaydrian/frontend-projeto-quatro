@@ -211,7 +211,7 @@ export function OrderBag() {
                 onClick={handleCheckout}
                 disabled={items.length === 0 || isSubmitting}
               >
-                {isSubmitting ? "Placing Order..." : "Finalize Order"}
+                {isSubmitting ? "Placing Order..." : "Place Order"}
               </button>
 
               {items.length > 0 && (
