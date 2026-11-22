@@ -40,9 +40,13 @@ export function UserMenu({ onAction }: UserMenuProps) {
     return null;
   }
 
-  const handleSignOut = () => {
+  const handleMenuAction = () => {
     setIsOpen(false);
     onAction?.();
+  };
+
+  const handleSignOut = () => {
+    handleMenuAction();
     logout();
     navigate("/login", { replace: true });
   };
@@ -88,14 +92,36 @@ export function UserMenu({ onAction }: UserMenuProps) {
 
           <div className={styles.dropdownDivider} />
 
+          {!isAdmin && (
+            <Link
+              to="/orders"
+              className={styles.menuItem}
+              role="menuitem"
+              onClick={handleMenuAction}
+            >
+              <svg
+                className={styles.menuIcon}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M4 3v18l4-2 4 2 4-2 4 2V3l-4 2-4-2-4 2-4-2z" />
+                <line x1="8" y1="9" x2="16" y2="9" />
+                <line x1="8" y1="13" x2="16" y2="13" />
+              </svg>
+              My Orders
+            </Link>
+          )}
+
           <Link
             to={isAdmin ? "/admin/profile" : "/profile"}
             className={styles.menuItem}
             role="menuitem"
-            onClick={() => {
-              setIsOpen(false);
-              onAction?.();
-            }}
+            onClick={handleMenuAction}
           >
             <svg
               className={styles.menuIcon}

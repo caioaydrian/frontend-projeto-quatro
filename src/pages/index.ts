@@ -6,6 +6,7 @@ export * from "./Users";
 export * from "./Drinks";
 export * from "./Categories";
 export * from "./Profile";
+export * from "./Orders";
 export * from "./Menu";
 export * from "./Reviews";
 export * from "./Sales";

@@ -1,0 +1,238 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 92px - 100px);
+  padding: 48px 24px;
+}
+
+.card {
+  width: 100%;
+  max-width: 680px;
+  background: var(--surface);
+  border: 1px solid rgb(234 228 219 / 10%);
+  padding: 40px;
+  box-shadow: 0 16px 40px rgb(0 0 0 / 40%);
+}
+
+.header {
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.eyebrow span {
+  width: 18px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.title {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.title em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.error {
+  padding: 12px 16px;
+  background: rgb(231 76 60 / 12%);
+  border: 1px solid rgb(231 76 60 / 30%);
+  color: #ff8577;
+  font-size: 12px;
+  line-height: 1.4;
+  border-radius: 2px;
+  margin-bottom: 20px;
+}
+
+.stateText {
+  color: var(--muted);
+  font-size: 14px;
+  padding: 24px 0;
+  text-align: center;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.order {
+  border: 1px solid rgb(234 228 219 / 10%);
+  background: rgb(255 255 255 / 3%);
+  padding: 18px 20px;
+  border-radius: 2px;
+}
+
+.orderHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.orderTitle {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+.orderDate {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.status {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border: 1px solid rgb(234 228 219 / 20%);
+  border-radius: 2px;
+  color: var(--muted);
+}
+
+.statusPending {
+  color: #facc15;
+  background: rgb(250 204 21 / 10%);
+  border-color: rgb(250 204 21 / 25%);
+}
+
+.statusReady {
+  color: #38bdf8;
+  background: rgb(56 189 248 / 10%);
+  border-color: rgb(56 189 248 / 25%);
+}
+
+.statusCompleted {
+  color: #4ade80;
+  background: rgb(74 222 128 / 10%);
+  border-color: rgb(74 222 128 / 25%);
+}
+
+.statusCancelled {
+  color: #f87171;
+  background: rgb(248 113 113 / 10%);
+  border-color: rgb(248 113 113 / 25%);
+}
+
+.items {
+  list-style: none;
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--text);
+  font-size: 13px;
+}
+
+.itemPrice {
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgb(234 228 219 / 10%);
+  font-size: 14px;
+}
+
+.total strong {
+  color: var(--accent);
+  font-size: 16px;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.pageButton {
+  padding: 8px 14px;
+  border: 1px solid rgb(200 157 106 / 40%);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+}
+
+.pageButton:hover:not(:disabled) {
+  background: rgb(200 157 106 / 12%);
+}
+
+.pageButton:disabled {
+  border-color: rgb(234 228 219 / 10%);
+  color: var(--muted);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.pageInfo {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.note {
+  margin-top: 24px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 32px 16px;
+  }
+
+  .card {
+    padding: 24px 18px;
+  }
+}

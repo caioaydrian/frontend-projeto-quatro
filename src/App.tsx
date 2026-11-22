@@ -1,5 +1,5 @@
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
-import { Home, Register, Login, Dashboard, Users, Drinks, Categories, Profile, Menu, Reviews, Sales } from "./pages";
+import { Home, Register, Login, Dashboard, Users, Drinks, Categories, Profile, Orders, Menu, Reviews, Sales } from "./pages";
 import { MainLayout, AdminLayout, ProtectedLayout, AuthRequiredLayout } from "./layouts";
 import { AuthProvider } from "./contexts/AuthContext";
 import { CartProvider } from "./contexts/CartContext";
@@ -15,7 +15,10 @@ const router = createBrowserRouter([
       { path: "login", element: <Login /> },
       {
         element: <AuthRequiredLayout />,
-        children: [{ path: "profile", element: <Profile /> }],
+        children: [
+          { path: "profile", element: <Profile /> },
+          { path: "orders", element: <Orders /> },
+        ],
       },
     ],
   },
